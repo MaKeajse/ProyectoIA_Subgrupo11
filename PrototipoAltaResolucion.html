@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OrientaIA — Prototipo Alta Resolución</title>
+<title>OrientaIA — Encuentra tu herramienta de IA ideal</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
 
@@ -55,12 +55,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
   }
 
-  .nav-logo .dot { 
-    width: 8px; height: 8px; 
-    background: var(--accent2); 
-    border-radius: 50%; 
+  .nav-logo .dot {
+    width: 8px; height: 8px;
+    background: var(--accent2);
+    border-radius: 50%;
     display: inline-block;
   }
 
@@ -83,6 +84,7 @@
   }
 
   .nav-link:hover { background: var(--surface2); color: var(--ink); }
+  .nav-link.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
 
   .nav-cta {
     background: var(--accent);
@@ -99,15 +101,11 @@
 
   .nav-cta:hover { opacity: 0.88; }
 
-  /* SCREENS WRAPPER */
+  /* SCREENS */
   .page { display: none; }
   .page.active { display: block; }
 
   /* ===== SCREEN 1: HOME ===== */
-  #home {
-    padding: 0;
-  }
-
   .hero {
     max-width: 680px;
     margin: 0 auto;
@@ -133,13 +131,9 @@
     font-size: 48px;
     line-height: 1.15;
     margin-bottom: 18px;
-    color: var(--ink);
   }
 
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
 
   .hero p {
     font-size: 17px;
@@ -197,1118 +191,1859 @@
     overflow: hidden;
   }
 
-  .stat-item {
+  .stat-cell {
     background: var(--surface);
     padding: 20px;
     text-align: center;
   }
 
-  .stat-num {
+  .stat-cell strong {
+    display: block;
     font-family: 'DM Serif Display', serif;
     font-size: 28px;
     color: var(--accent);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: var(--ink3);
-    margin-top: 2px;
-  }
-
-  .role-section {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 48px 32px;
-  }
-
-  .role-section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-
-  .role-section > p {
-    text-align: center;
-    font-size: 15px;
-    color: var(--ink2);
-    margin-bottom: 32px;
-  }
-
-  .roles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .role-card {
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s, transform 0.1s;
-  }
-
-  .role-card:hover {
-    border-color: var(--accent);
-    background: var(--surface);
-    transform: translateY(-2px);
-  }
-
-  .role-card.selected {
-    border-color: var(--accent);
-    background: var(--accent-light);
-  }
-
-  .role-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    margin: 0 auto 12px;
-  }
-
-  .role-card.selected .role-icon { background: var(--accent); }
-
-  .role-name {
-    font-size: 14px;
-    font-weight: 600;
     margin-bottom: 4px;
   }
 
-  .role-desc {
-    font-size: 12px;
-    color: var(--ink2);
-    line-height: 1.4;
+  .stat-cell span { font-size: 13px; color: var(--ink2); }
+
+  .features-grid {
+    max-width: 880px;
+    margin: 0 auto 80px;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
+
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    background: var(--accent-light);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .feature-card p { font-size: 13px; color: var(--ink2); line-height: 1.6; }
 
   /* ===== SCREEN 2: WIZARD ===== */
-  .wizard-layout {
+  .wizard-container {
     max-width: 640px;
     margin: 0 auto;
-    padding: 48px 24px;
+    padding: 48px 32px 80px;
   }
 
-  .wizard-progress {
+  .wizard-header { margin-bottom: 40px; }
+
+  .wizard-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .wizard-header p { font-size: 15px; color: var(--ink2); }
+
+  .progress-steps {
     display: flex;
     align-items: center;
     gap: 0;
     margin-bottom: 40px;
   }
 
-  .wp-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-  }
-
-  .wp-circle {
-    width: 32px;
-    height: 32px;
+  .wc {
+    width: 32px; height: 32px;
     border-radius: 50%;
-    border: 2px solid var(--border2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
+    border: 2px solid var(--border2);
     background: var(--surface);
-    color: var(--ink2);
+    color: var(--ink3);
     transition: all 0.2s;
-    position: relative;
-    z-index: 2;
-  }
-
-  .wp-circle.done {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
-  .wp-circle.current {
-    border-color: var(--accent);
-    color: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-light);
-  }
-
-  .wp-label { font-size: 11px; color: var(--ink3); text-align: center; }
-  .wp-label.active { color: var(--accent); font-weight: 500; }
-
-  .wp-line {
-    flex: 1;
-    height: 2px;
-    background: var(--border2);
-    margin: 0 -4px;
-    margin-bottom: 18px;
+    flex-shrink: 0;
     position: relative;
     z-index: 1;
   }
 
-  .wp-line.done { background: var(--accent); }
-
-  .wizard-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 36px 32px;
+  .wc.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
   }
 
-  .wizard-card h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 24px;
-    margin-bottom: 6px;
+  .wc.done {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
   }
 
-  .wizard-card > p {
-    font-size: 14px;
-    color: var(--ink2);
-    margin-bottom: 28px;
+  .wc.done::after { content: '✓'; font-size: 14px; }
+
+  .wc-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border2);
+    transition: background 0.2s;
   }
 
-  .field-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
-    margin-bottom: 8px;
-  }
+  .wc-line.done { background: var(--accent); }
 
-  .field-desc {
-    font-size: 12px;
-    color: var(--ink3);
-    margin-bottom: 12px;
-  }
-
-  .roles-mini {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .role-mini {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    cursor: pointer;
+  .step-label {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.15s;
-    background: var(--bg);
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding: 0 2px;
   }
 
-  .role-mini:hover { border-color: var(--accent); background: var(--surface); }
+  .step-label span {
+    font-size: 11px;
+    color: var(--ink3);
+    text-align: center;
+    flex: 1;
+  }
 
-  .role-mini.selected {
+  .step-label span.active-label { color: var(--accent); font-weight: 500; }
+
+  .wizard-step { display: none; }
+  .wizard-step.active { display: block; }
+
+  .step-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+
+  /* Role cards */
+  .role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .role-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .role-card:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .role-card.selected {
     border-color: var(--accent);
     background: var(--accent-light);
   }
 
-  .role-mini .mini-icon {
-    font-size: 20px;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+  .role-card .role-icon { font-size: 28px; margin-bottom: 10px; }
+  .role-card .role-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .role-card .role-desc { font-size: 12px; color: var(--ink2); }
 
-  .role-mini.selected .mini-icon { background: var(--accent); }
+  /* Area select */
+  .field-group { margin-bottom: 20px; }
+  .field-group label { font-size: 13px; font-weight: 500; display: block; margin-bottom: 6px; color: var(--ink2); }
 
-  .role-mini .mini-text { font-size: 13px; font-weight: 500; }
-  .role-mini .mini-sub { font-size: 11px; color: var(--ink2); margin-top: 1px; }
-
-  .select-custom {
+  .field-select {
     width: 100%;
+    padding: 10px 14px;
     border: 1.5px solid var(--border2);
     border-radius: var(--radius-sm);
-    padding: 11px 14px;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
     background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
     color: var(--ink);
-    margin-bottom: 24px;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6660'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
+    outline: none;
     cursor: pointer;
-    transition: border-color 0.15s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6660' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
   }
 
-  .select-custom:focus { outline: none; border-color: var(--accent); }
+  .field-select:focus { border-color: var(--accent); }
 
-  .tags-container {
+  /* Task tags */
+  .tag-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .tag-filter {
-    border: 1.5px solid var(--border2);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    background: var(--bg);
-    color: var(--ink2);
-    transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .tag-filter:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-
-  .tag-filter.selected {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
-  .wizard-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-
-  .btn-back {
-    color: var(--ink2);
-    background: none;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* ===== SCREEN 3: RESULTADOS ===== */
-  .results-layout {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 24px;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 28px;
-  }
-
-  .sidebar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-  }
-
-  .sidebar h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
-
-  .filter-group { margin-bottom: 20px; }
-
-  .filter-group-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     margin-bottom: 8px;
   }
 
-  .filter-opt {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 0;
+  .tag {
+    padding: 7px 14px;
+    border-radius: 20px;
     font-size: 13px;
-    cursor: pointer;
-  }
-
-  .filter-check {
-    width: 16px;
-    height: 16px;
     border: 1.5px solid var(--border2);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 10px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
   }
 
-  .filter-check.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .tag.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-  .results-main {}
+  .tag-hint { font-size: 12px; color: var(--ink3); margin-top: 6px; }
+
+  /* Budget */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .budget-card {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+
+  .budget-card:hover { border-color: var(--accent); }
+  .budget-card.selected { border-color: var(--accent); background: var(--accent-light); }
+  .budget-card .b-icon { font-size: 22px; margin-bottom: 6px; }
+  .budget-card .b-label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .budget-card .b-sub { font-size: 11px; color: var(--ink2); }
+
+  /* Wizard nav */
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  .btn-ghost {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: var(--ink2);
+    cursor: pointer;
+    padding: 8px 4px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-ghost:hover { color: var(--ink); }
+
+  /* ===== SCREEN 3: RESULTS ===== */
+  .results-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
 
   .results-header {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
   .results-header h2 {
     font-family: 'DM Serif Display', serif;
-    font-size: 22px;
+    font-size: 28px;
+    margin-bottom: 4px;
   }
 
-  .results-header p { font-size: 13px; color: var(--ink2); margin-top: 2px; }
+  .results-header p { font-size: 14px; color: var(--ink2); }
 
-  .results-tabs {
+  .results-meta {
     display: flex;
-    gap: 4px;
-    background: var(--surface2);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-    margin-bottom: 20px;
-    width: fit-content;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
-  .rtab {
-    font-size: 13px;
-    font-weight: 500;
-    padding: 6px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    font-family: 'DM Sans', sans-serif;
+  .meta-tag {
+    font-size: 12px;
+    background: var(--surface2);
     color: var(--ink2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .meta-tag.role-tag { background: var(--accent-light); color: var(--accent); }
+
+  .sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .sort-bar span { font-size: 13px; color: var(--ink2); }
+
+  .sort-btn {
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border2);
+    background: var(--surface);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
     transition: all 0.15s;
   }
 
-  .rtab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .sort-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
 
   .tool-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 24px;
-    margin-bottom: 14px;
-    display: grid;
-    grid-template-columns: 52px 1fr auto;
-    gap: 16px;
-    align-items: start;
-    transition: border-color 0.15s, transform 0.1s;
     cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    overflow: hidden;
   }
 
-  .tool-card:hover { border-color: var(--accent); transform: translateY(-1px); }
-
-  .tool-card.featured {
+  .tool-card:hover {
     border-color: var(--accent);
-    background: var(--accent-light);
+    box-shadow: 0 4px 20px rgba(45,90,61,0.08);
+    transform: translateY(-2px);
+  }
+
+  .tool-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
   }
 
   .tool-logo {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: var(--surface2);
+    width: 44px; height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
     border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--ink2);
+    background: var(--surface2);
     flex-shrink: 0;
   }
 
-  .tool-logo.gpt { background: #10a37f; color: #fff; }
-  .tool-logo.notion { background: #1a1814; color: #fff; }
-  .tool-logo.gram { background: #15c39a; color: #fff; }
-  .tool-logo.claude { background: #D4763B; color: #fff; }
-  .tool-logo.copilot { background: #0078d4; color: #fff; }
+  .fav-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--ink3);
+    line-height: 1;
+    padding: 2px;
+    transition: transform 0.15s;
+  }
 
-  .tool-content h3 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
-  .tool-content .tool-org { font-size: 12px; color: var(--ink3); margin-bottom: 8px; }
-  .tool-content .tool-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; margin-bottom: 10px; }
+  .fav-btn:hover { transform: scale(1.2); }
+  .fav-btn.active { color: #E55B4D; }
 
-  .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tool-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .tool-category { font-size: 12px; color: var(--ink3); margin-bottom: 10px; }
 
-  .tag-pill {
+  .tool-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+
+  .tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .tool-tag {
     font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 12px;
     background: var(--surface2);
     color: var(--ink2);
+    padding: 3px 8px;
+    border-radius: 6px;
   }
 
-  .tag-pill.green { background: var(--accent-light); color: var(--accent); }
-  .tag-pill.orange { background: var(--accent2-light); color: var(--accent2); }
-
-  .tool-actions {
+  .tool-footer {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .match-badge {
-    background: var(--accent);
-    color: #fff;
-    font-size: 11px;
+  .score-badge {
+    font-size: 12px;
     font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
     padding: 4px 10px;
     border-radius: 20px;
-    white-space: nowrap;
   }
 
-  .fav-btn {
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid var(--border2);
-    border-radius: 8px;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.15s;
-  }
-
-  .fav-btn:hover { border-color: var(--accent2); background: var(--accent2-light); }
-  .fav-btn.active { background: var(--accent2-light); border-color: var(--accent2); }
-
-  .tool-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  .price-badge {
     font-size: 12px;
-    color: var(--ink3);
+    color: var(--ink2);
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 20px;
   }
 
-  .stars { color: #E8A838; letter-spacing: 1px; font-size: 12px; }
+  .price-badge.free { color: var(--accent); background: var(--accent-light); }
 
-  /* ===== SCREEN 4: DETALLE ===== */
-  .detail-layout {
+  .match-bar-wrap { margin-top: 10px; }
+  .match-bar-label { font-size: 11px; color: var(--ink3); margin-bottom: 4px; }
+  .match-bar {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .match-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  /* ===== SCREEN 4: DETAIL ===== */
+  .detail-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: 40px 32px 80px;
   }
 
   .detail-back {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 6px;
     font-size: 14px;
     color: var(--ink2);
-    margin-bottom: 24px;
     cursor: pointer;
-    border: none;
-    background: none;
-    font-family: 'DM Sans', sans-serif;
-    transition: color 0.15s;
+    margin-bottom: 32px;
+    width: fit-content;
   }
 
   .detail-back:hover { color: var(--ink); }
 
-  .detail-header {
+  .detail-hero {
     display: flex;
-    gap: 20px;
     align-items: flex-start;
-    margin-bottom: 28px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 28px;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
   }
 
   .detail-logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    font-size: 20px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 64px; height: 64px;
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
     flex-shrink: 0;
   }
 
-  .detail-logo.gpt { background: #10a37f; color: #fff; }
+  .detail-info { flex: 1; min-width: 220px; }
 
-  .detail-info h1 { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 4px; }
-  .detail-info .org { font-size: 14px; color: var(--ink2); margin-bottom: 10px; }
+  .detail-info h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
 
-  .detail-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .detail-info .detail-cat { font-size: 13px; color: var(--ink3); margin-bottom: 10px; }
 
-  .detail-section {
+  .detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .badge-green { background: var(--accent-light); color: var(--accent); }
+  .badge-orange { background: var(--accent2-light); color: var(--accent2); }
+  .badge-gray { background: var(--surface2); color: var(--ink2); }
+
+  .detail-section { margin-bottom: 28px; }
+
+  .detail-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-section p {
+    font-size: 14px;
+    color: var(--ink2);
+    line-height: 1.7;
+  }
+
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .pros-list, .cons-list {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .pros-list h4 { color: var(--accent); font-size: 13px; margin-bottom: 10px; }
+  .cons-list h4 { color: var(--accent2); font-size: 13px; margin-bottom: 10px; }
+
+  .pros-list li, .cons-list li {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.55;
+    padding: 4px 0 4px 16px;
+    position: relative;
+    list-style: none;
+  }
+
+  .pros-list li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-size: 11px; top: 5px; }
+  .cons-list li::before { content: '✗'; position: absolute; left: 0; color: var(--accent2); font-size: 11px; top: 5px; }
+
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .use-case-item {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px 28px;
-    margin-bottom: 16px;
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.4;
   }
 
-  .detail-section h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+  .use-case-item::before { content: '→ '; color: var(--accent); font-weight: 600; }
 
-  .why-box {
-    background: var(--accent-light);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 14px 18px;
-    font-size: 14px;
-    color: var(--ink);
-    line-height: 1.6;
-    margin-bottom: 16px;
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
   }
 
-  .feature-row {
+  .plan-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .plan-card.highlight { border-color: var(--accent); background: var(--accent-light); }
+  .plan-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .plan-price { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+  .plan-desc { font-size: 11px; color: var(--ink2); }
+
+  .how-to-steps {
+    counter-reset: step;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .feature-row:last-child { border-bottom: none; }
+  .how-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
 
-  .feat-icon {
-    font-size: 15px;
-    margin-top: 1px;
+  .step-num {
+    counter-increment: step;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
 
-  .feat-label { font-weight: 500; }
-  .feat-desc { font-size: 12px; color: var(--ink2); margin-top: 1px; }
+  .how-step p { font-size: 13px; color: var(--ink2); line-height: 1.55; padding-top: 4px; }
 
-  .cta-row {
+  .detail-cta {
     display: flex;
     gap: 12px;
-    margin-top: 24px;
+    flex-wrap: wrap;
+    margin-top: 32px;
   }
 
+  /* ===== SCREEN 5: CATALOG ===== */
+  .catalog-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  .catalog-header { margin-bottom: 32px; }
+
+  .catalog-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .catalog-header p { font-size: 15px; color: var(--ink2); }
+
+  .catalog-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+  }
+
+  .search-box input {
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    flex: 1;
+    width: 100%;
+  }
+
+  .search-box input::placeholder { color: var(--ink3); }
+
+  .filter-chip {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1.5px solid var(--border2);
+    background: var(--surface);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ===== SCREEN 6: PROFILE ===== */
+  .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .profile-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    color: #fff;
+    font-family: 'DM Serif Display', serif;
+    flex-shrink: 0;
+  }
+
+  .profile-info h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .profile-info p { font-size: 14px; color: var(--ink2); }
+
+  .profile-section { margin-bottom: 36px; }
+
+  .profile-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .profile-section-header h3 { font-size: 17px; font-weight: 600; }
+  .profile-section-header span { font-size: 13px; color: var(--ink3); }
+
+  .empty-state {
+    background: var(--surface);
+    border: 1px dashed var(--border2);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .empty-state .empty-icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-state p { font-size: 14px; color: var(--ink2); }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .history-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .history-item:hover { border-color: var(--accent); }
+
+  .history-item-info { flex: 1; }
+  .history-item-role { font-size: 12px; color: var(--accent); font-weight: 500; margin-bottom: 2px; }
+  .history-item-tasks { font-size: 13px; color: var(--ink); }
+  .history-item-date { font-size: 11px; color: var(--ink3); white-space: nowrap; }
+
+  .favs-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .fav-tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .fav-tool-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .fav-tool-logo {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .fav-tool-info { flex: 1; }
+  .fav-tool-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .fav-tool-cat { font-size: 12px; color: var(--ink3); }
+
+  .fav-remove {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--ink3);
+    padding: 4px;
+    transition: color 0.15s;
+  }
+
+  .fav-remove:hover { color: #E55B4D; }
+
+  .feedback-section {
+    background: var(--accent-light);
+    border: 1px solid rgba(45,90,61,0.15);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    text-align: center;
+  }
+
+  .feedback-section h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .feedback-section p { font-size: 14px; color: var(--ink2); margin-bottom: 20px; }
+
+  .feedback-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  .feedback-btn {
+    padding: 9px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border: 1.5px solid var(--border2);
+    background: var(--surface);
+    transition: all 0.15s;
+  }
+
+  .feedback-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    z-index: 999;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Utility */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 32px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .role-grid { grid-template-columns: 1fr; }
+    .pros-cons { grid-template-columns: 1fr; }
+    .favs-list { grid-template-columns: 1fr; }
+    .budget-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 16px; }
+    .hero, .wizard-container, .results-container, .detail-container,
+    .catalog-container, .profile-container { padding-left: 16px; padding-right: 16px; }
+  }
 </style>
 </head>
 <body>
 
+<!-- NAVIGATION -->
 <nav>
-  <div class="nav-logo">
-    <span class="dot"></span>
-    OrientaIA
+  <div class="nav-logo" onclick="goTo('home')">
+    OrientaIA <span class="dot"></span>
   </div>
   <div class="nav-links">
-    <button class="nav-link" onclick="goTo('home')">Inicio</button>
-    <button class="nav-link" onclick="goTo('wizard')">Buscar herramienta</button>
-    <button class="nav-link">Catálogo</button>
-    <button class="nav-link">Mi perfil</button>
-    <button class="nav-cta" onclick="goTo('wizard')">Comenzar →</button>
+    <button class="nav-link" id="nav-catalog" onclick="goTo('catalog')">Catálogo</button>
+    <button class="nav-link" id="nav-profile" onclick="goTo('profile')">Mi perfil</button>
+    <button class="nav-cta" onclick="goTo('wizard')">Buscar herramienta</button>
   </div>
 </nav>
 
-<!-- ===== PANTALLA 1: HOME ===== -->
-<div id="home" class="page active">
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<!-- ==================== SCREEN 1: HOME ==================== -->
+<div class="page active" id="home">
   <div class="hero">
-    <div class="hero-badge">
-      ✦ Orientación personalizada con IA
-    </div>
-    <h1>Encuentra la herramienta de IA <em>perfecta</em> para ti</h1>
-    <p>Describe tu rol y tu tarea. En segundos te recomendamos las herramientas de inteligencia artificial más adecuadas, con guía de uso paso a paso.</p>
+    <div class="hero-badge">✦ Más de 10 herramientas de IA evaluadas</div>
+    <h1>Encuentra la herramienta de IA <em>perfecta</em> para tu trabajo</h1>
+    <p>Responde 3 preguntas rápidas y recibe recomendaciones personalizadas según tu rol, tus tareas y tu presupuesto. Sin perder tiempo probando herramientas a ciegas.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="goTo('wizard')">Comenzar orientación →</button>
-      <button class="btn-outline">Ver el catálogo completo</button>
+      <button class="btn-primary" onclick="goTo('wizard')">Comenzar ahora →</button>
+      <button class="btn-outline" onclick="goTo('catalog')">Ver catálogo completo</button>
     </div>
   </div>
 
-  <div class="stats-bar" style="padding: 0 32px; max-width: 680px; margin: 0 auto 48px;">
-    <div class="stat-item">
-      <span class="stat-num">120+</span>
-      <span class="stat-label">Herramientas catalogadas</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">18</span>
-      <span class="stat-label">Categorías de tareas</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">4</span>
-      <span class="stat-label">Perfiles de usuario</span>
-    </div>
+  <div class="stats-bar">
+    <div class="stat-cell"><strong>80%</strong><span>de usuarios eligen la herramienta incorrecta</span></div>
+    <div class="stat-cell"><strong>73%</strong><span>pierden tiempo por usar la herramienta equivocada</span></div>
+    <div class="stat-cell"><strong>10+</strong><span>herramientas comparadas y evaluadas</span></div>
   </div>
 
-  <div class="role-section">
-    <h2>¿Cuál es tu perfil?</h2>
-    <p>Selecciona tu rol y comenzamos la orientación personalizada</p>
-    <div class="roles-grid">
-      <div class="role-card" onclick="selectRoleAndGo('estudiante')">
-        <div class="role-icon">🎓</div>
-        <div class="role-name">Estudiante</div>
-        <div class="role-desc">Tareas académicas, investigación, redacción de trabajos</div>
-      </div>
-      <div class="role-card" onclick="selectRoleAndGo('profesional')">
-        <div class="role-icon">💼</div>
-        <div class="role-name">Profesional</div>
-        <div class="role-desc">Productividad laboral, análisis de datos, informes</div>
-      </div>
-      <div class="role-card" onclick="selectRoleAndGo('empresa')">
-        <div class="role-icon">🏢</div>
-        <div class="role-name">Empresa / Equipo</div>
-        <div class="role-desc">Automatización, flujos de trabajo, colaboración</div>
-      </div>
-      <div class="role-card" onclick="selectRoleAndGo('emprendedor')">
-        <div class="role-icon">🚀</div>
-        <div class="role-name">Emprendedor</div>
-        <div class="role-desc">Marketing, pitch, desarrollo de producto</div>
-      </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Recomendación personalizada</h3>
+      <p>Algoritmo de coincidencia basado en tu rol, área de trabajo, tareas específicas y presupuesto disponible.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Comparación detallada</h3>
+      <p>Ventajas, limitaciones, casos de uso reales, planes de precios y guía paso a paso para empezar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⭐</div>
+      <h3>Guarda tus favoritas</h3>
+      <p>Marca las herramientas que te interesen y accede a tu historial de búsquedas cuando quieras.</p>
     </div>
   </div>
 </div>
 
-<!-- ===== PANTALLA 2: WIZARD ===== -->
-<div id="wizard" class="page">
-  <div class="wizard-layout">
-
-    <div class="wizard-progress">
-      <div class="wp-step">
-        <div class="wp-circle done" id="wc1">✓</div>
-        <div class="wp-label active">Rol</div>
-      </div>
-      <div class="wp-line" id="wl1"></div>
-      <div class="wp-step">
-        <div class="wp-circle current" id="wc2">2</div>
-        <div class="wp-label active">Tarea</div>
-      </div>
-      <div class="wp-line" id="wl2" style="background:var(--border2)"></div>
-      <div class="wp-step">
-        <div class="wp-circle" id="wc3">3</div>
-        <div class="wp-label">Preferencias</div>
-      </div>
-      <div class="wp-line" style="background:var(--border2)"></div>
-      <div class="wp-step">
-        <div class="wp-circle" id="wc4">4</div>
-        <div class="wp-label">Resultados</div>
-      </div>
+<!-- ==================== SCREEN 2: WIZARD ==================== -->
+<div class="page" id="wizard">
+  <div class="wizard-container">
+    <div class="wizard-header">
+      <h2>Encuentra tu herramienta ideal</h2>
+      <p>3 pasos rápidos para recibir recomendaciones personalizadas</p>
     </div>
 
-    <div class="wizard-card" id="wizard-step-1">
-      <h2>¿Cuál es tu rol?</h2>
-      <p>Selecciona el perfil que mejor te describe para personalizar las recomendaciones</p>
+    <!-- Progress bar -->
+    <div class="progress-steps">
+      <div class="wc" id="wc1">1</div>
+      <div class="wc-line" id="wl1"></div>
+      <div class="wc" id="wc2">2</div>
+      <div class="wc-line" id="wl2"></div>
+      <div class="wc" id="wc3">3</div>
+    </div>
+    <div class="step-label">
+      <span id="sl1">Tu perfil</span>
+      <span id="sl2">Tus tareas</span>
+      <span id="sl3">Presupuesto</span>
+    </div>
 
-      <div class="roles-mini">
-        <div class="role-mini selected" id="rm-estudiante" onclick="selectRole('estudiante')">
-          <div class="mini-icon">🎓</div>
-          <div>
-            <div class="mini-text">Estudiante</div>
-            <div class="mini-sub">Académico</div>
-          </div>
+    <!-- STEP 1: Role & Area -->
+    <div class="wizard-step" id="step1">
+      <div class="step-title">¿Cuál es tu perfil principal?</div>
+      <div class="role-grid">
+        <div class="role-card" id="rc-estudiante" onclick="selectRole('estudiante')">
+          <div class="role-icon">🎓</div>
+          <div class="role-name">Estudiante</div>
+          <div class="role-desc">Universitario, investigador, aprendiz</div>
         </div>
-        <div class="role-mini" id="rm-profesional" onclick="selectRole('profesional')">
-          <div class="mini-icon">💼</div>
-          <div>
-            <div class="mini-text">Profesional</div>
-            <div class="mini-sub">Laboral</div>
-          </div>
+        <div class="role-card" id="rc-profesional" onclick="selectRole('profesional')">
+          <div class="role-icon">💼</div>
+          <div class="role-name">Profesional</div>
+          <div class="role-desc">Empleado, consultor, freelancer</div>
         </div>
-        <div class="role-mini" id="rm-empresa" onclick="selectRole('empresa')">
-          <div class="mini-icon">🏢</div>
-          <div>
-            <div class="mini-text">Empresa / Equipo</div>
-            <div class="mini-sub">Organizacional</div>
-          </div>
+        <div class="role-card" id="rc-empresa" onclick="selectRole('empresa')">
+          <div class="role-icon">🏢</div>
+          <div class="role-name">Empresa / Equipo</div>
+          <div class="role-desc">Manager, líder de área, equipo</div>
         </div>
-        <div class="role-mini" id="rm-emprendedor" onclick="selectRole('emprendedor')">
-          <div class="mini-icon">🚀</div>
-          <div>
-            <div class="mini-text">Emprendedor</div>
-            <div class="mini-sub">Startup / Negocio</div>
-          </div>
+        <div class="role-card" id="rc-emprendedor" onclick="selectRole('emprendedor')">
+          <div class="role-icon">🚀</div>
+          <div class="role-name">Emprendedor</div>
+          <div class="role-desc">Startup, negocio propio, proyecto</div>
         </div>
       </div>
 
-      <div class="field-label">Área de trabajo o estudio</div>
-      <select class="select-custom" id="area-select">
-        <option value="">Seleccionar área...</option>
-        <option value="tech">Tecnología / Sistemas</option>
-        <option value="health">Salud</option>
-        <option value="edu">Educación</option>
-        <option value="biz">Negocios / Administración</option>
-        <option value="design">Diseño y Creatividad</option>
-        <option value="law">Derecho</option>
-        <option value="science">Ciencias Exactas</option>
-        <option value="other">Otra</option>
-      </select>
+      <div class="field-group">
+        <label for="area-select">¿En qué área trabajas principalmente?</label>
+        <select class="field-select" id="area-select" onchange="STATE.area = this.value">
+          <option value="">Selecciona un área...</option>
+          <option value="tecnologia">Tecnología / Desarrollo</option>
+          <option value="marketing">Marketing / Comunicaciones</option>
+          <option value="educacion">Educación / Academia</option>
+          <option value="diseno">Diseño / Creatividad</option>
+          <option value="negocios">Negocios / Administración</option>
+          <option value="salud">Salud / Ciencias</option>
+          <option value="legal">Legal / Jurídico</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
 
-      <div class="wizard-footer">
-        <button class="btn-back" onclick="goTo('home')">← Volver</button>
+      <div class="wizard-nav">
+        <button class="btn-ghost" onclick="goTo('home')">← Volver</button>
         <button class="btn-primary" onclick="nextStep()">Continuar →</button>
       </div>
     </div>
 
-    <div class="wizard-card" id="wizard-step-2" style="display:none">
-      <h2>¿Qué necesitas hacer?</h2>
-      <p>Selecciona la categoría de tarea principal o describe lo que necesitas</p>
-
-      <div class="field-label">Categoría de tarea</div>
-      <div class="field-desc">Toca una o varias categorías que apliquen</div>
-      <div class="tags-container" id="task-tags">
-        <button class="tag-filter selected" onclick="toggleTag(this)">✍️ Redacción / Escritura</button>
-        <button class="tag-filter" onclick="toggleTag(this)">📊 Análisis de datos</button>
-        <button class="tag-filter" onclick="toggleTag(this)">💻 Programación / Código</button>
-        <button class="tag-filter" onclick="toggleTag(this)">🎨 Diseño / Imágenes</button>
-        <button class="tag-filter" onclick="toggleTag(this)">📑 Presentaciones</button>
-        <button class="tag-filter" onclick="toggleTag(this)">🔍 Investigación</button>
-        <button class="tag-filter" onclick="toggleTag(this)">⚡ Automatización</button>
-        <button class="tag-filter" onclick="toggleTag(this)">🌐 Traducción / Idiomas</button>
-        <button class="tag-filter" onclick="toggleTag(this)">🎵 Audio / Video</button>
-        <button class="tag-filter" onclick="toggleTag(this)">📧 Comunicación / Email</button>
+    <!-- STEP 2: Tasks -->
+    <div class="wizard-step" id="step2">
+      <div class="step-title">¿Qué tareas necesitas hacer? <span style="font-size:13px;color:var(--ink3);font-weight:400">(selecciona todas las que apliquen)</span></div>
+      <div class="tag-grid" id="task-tags">
+        <div class="tag" data-task="writing" onclick="toggleTag(this)">✍️ Redacción y escritura</div>
+        <div class="tag" data-task="analysis" onclick="toggleTag(this)">📊 Análisis de datos</div>
+        <div class="tag" data-task="code" onclick="toggleTag(this)">💻 Programación</div>
+        <div class="tag" data-task="design" onclick="toggleTag(this)">🎨 Diseño visual</div>
+        <div class="tag" data-task="presentations" onclick="toggleTag(this)">📑 Presentaciones</div>
+        <div class="tag" data-task="research" onclick="toggleTag(this)">🔍 Investigación</div>
+        <div class="tag" data-task="automation" onclick="toggleTag(this)">⚙️ Automatización</div>
+        <div class="tag" data-task="translation" onclick="toggleTag(this)">🌐 Traducción</div>
+        <div class="tag" data-task="audio_video" onclick="toggleTag(this)">🎬 Audio / Video</div>
+        <div class="tag" data-task="communication" onclick="toggleTag(this)">💬 Comunicación</div>
       </div>
+      <div class="tag-hint">Selecciona al menos una tarea para continuar</div>
 
-      <div class="field-label">Costo máximo aceptable</div>
-      <select class="select-custom" id="cost-select">
-        <option value="free">Solo herramientas gratuitas</option>
-        <option value="10">Hasta $10 / mes</option>
-        <option value="30">Hasta $30 / mes</option>
-        <option value="any">Sin límite de costo</option>
-      </select>
-
-      <div class="wizard-footer">
-        <button class="btn-back" onclick="prevStep()">← Volver</button>
-        <button class="btn-primary" onclick="goTo('results')">Ver recomendaciones →</button>
+      <div class="wizard-nav">
+        <button class="btn-ghost" onclick="prevStep()">← Anterior</button>
+        <button class="btn-primary" onclick="nextStep()">Continuar →</button>
       </div>
     </div>
 
-  </div>
-</div>
-
-<!-- ===== PANTALLA 3: RESULTADOS ===== -->
-<div id="results" class="page">
-  <div class="results-layout">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h3>Filtrar resultados</h3>
-
-      <div class="filter-group">
-        <div class="filter-group-label">Costo</div>
-        <div class="filter-opt">
-          <div class="filter-check on">✓</div>
-          <span>Gratuita</span>
+    <!-- STEP 3: Budget -->
+    <div class="wizard-step" id="step3">
+      <div class="step-title">¿Cuánto estás dispuesto a invertir mensualmente?</div>
+      <div class="budget-grid">
+        <div class="budget-card selected" id="bc-free" onclick="selectBudget('free', this)">
+          <div class="b-icon">🆓</div>
+          <div class="b-label">Gratuito</div>
+          <div class="b-sub">Solo opciones free</div>
         </div>
-        <div class="filter-opt">
-          <div class="filter-check on">✓</div>
-          <span>Freemium</span>
+        <div class="budget-card" id="bc-low" onclick="selectBudget('low', this)">
+          <div class="b-icon">💰</div>
+          <div class="b-label">Hasta $25K COP/mes</div>
+          <div class="b-sub">≈ USD $6</div>
         </div>
-        <div class="filter-opt">
-          <div class="filter-check"></div>
-          <span>De pago</span>
+        <div class="budget-card" id="bc-medium" onclick="selectBudget('medium', this)">
+          <div class="b-icon">💳</div>
+          <div class="b-label">$25K – $80K COP/mes</div>
+          <div class="b-sub">≈ USD $6–$20</div>
         </div>
       </div>
 
-      <div class="filter-group">
-        <div class="filter-group-label">Idioma</div>
-        <div class="filter-opt">
-          <div class="filter-check on">✓</div>
-          <span>Español</span>
-        </div>
-        <div class="filter-opt">
-          <div class="filter-check on">✓</div>
-          <span>Inglés</span>
-        </div>
+      <div class="wizard-nav">
+        <button class="btn-ghost" onclick="prevStep()">← Anterior</button>
+        <button class="btn-primary" onclick="getRecommendations()">Ver recomendaciones →</button>
       </div>
-
-      <div class="filter-group">
-        <div class="filter-group-label">Tipo de uso</div>
-        <div class="filter-opt">
-          <div class="filter-check on">✓</div>
-          <span>Web</span>
-        </div>
-        <div class="filter-opt">
-          <div class="filter-check"></div>
-          <span>Aplicación móvil</span>
-        </div>
-        <div class="filter-opt">
-          <div class="filter-check"></div>
-          <span>API / Desarrollador</span>
-        </div>
-      </div>
-
-      <button class="btn-outline" style="width:100%;font-size:13px;padding:9px;" onclick="goTo('wizard')">Modificar búsqueda</button>
-    </div>
-
-    <!-- Main content -->
-    <div class="results-main">
-      <div class="results-header">
-        <div>
-          <h2>Recomendaciones para ti</h2>
-          <p>Rol: <strong>Estudiante · Tecnología</strong> · Tarea: <strong>Redacción / Escritura</strong></p>
-        </div>
-      </div>
-
-      <div class="results-tabs">
-        <button class="rtab active">Todas (5)</button>
-        <button class="rtab">Gratuitas (3)</button>
-        <button class="rtab">Freemium (2)</button>
-      </div>
-
-      <!-- TOOL CARDS -->
-      <div class="tool-card featured" onclick="goTo('detail')">
-        <div class="tool-logo gpt">G</div>
-        <div class="tool-content">
-          <h3>ChatGPT</h3>
-          <div class="tool-org">OpenAI · Asistente conversacional</div>
-          <div class="tool-desc">Potente asistente de escritura, análisis y resolución de preguntas. Versión gratuita robusta para uso académico diario.</div>
-          <div class="tool-tags">
-            <span class="tag-pill green">Gratuita</span>
-            <span class="tag-pill">Escritura</span>
-            <span class="tag-pill">Análisis</span>
-            <span class="tag-pill">Español</span>
-          </div>
-        </div>
-        <div class="tool-actions">
-          <div class="match-badge">98% compatibilidad</div>
-          <div class="tool-rating">
-            <span class="stars">★★★★★</span> 4.8
-          </div>
-          <button class="fav-btn active" onclick="event.stopPropagation()">♥</button>
-        </div>
-      </div>
-
-      <div class="tool-card" onclick="goTo('detail')">
-        <div class="tool-logo notion">N</div>
-        <div class="tool-content">
-          <h3>Notion AI</h3>
-          <div class="tool-org">Notion Labs · Gestión del conocimiento</div>
-          <div class="tool-desc">Redacción asistida integrada en tu espacio de trabajo. Ideal para tomar apuntes, organizar proyectos y generar documentos estructurados.</div>
-          <div class="tool-tags">
-            <span class="tag-pill orange">Freemium</span>
-            <span class="tag-pill">Notas</span>
-            <span class="tag-pill">Organización</span>
-            <span class="tag-pill">Español</span>
-          </div>
-        </div>
-        <div class="tool-actions">
-          <div class="match-badge" style="background:var(--ink2)">91% compatibilidad</div>
-          <div class="tool-rating">
-            <span class="stars">★★★★☆</span> 4.5
-          </div>
-          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
-        </div>
-      </div>
-
-      <div class="tool-card" onclick="goTo('detail')">
-        <div class="tool-logo gram">Gr</div>
-        <div class="tool-content">
-          <h3>Grammarly</h3>
-          <div class="tool-org">Grammarly Inc. · Corrección y estilo</div>
-          <div class="tool-desc">Corrección gramatical y de estilo en tiempo real. Extensión para navegador y app de escritorio. Muy útil para trabajos académicos en inglés.</div>
-          <div class="tool-tags">
-            <span class="tag-pill orange">Freemium</span>
-            <span class="tag-pill">Corrección</span>
-            <span class="tag-pill">Inglés</span>
-          </div>
-        </div>
-        <div class="tool-actions">
-          <div class="match-badge" style="background:var(--ink2)">85% compatibilidad</div>
-          <div class="tool-rating">
-            <span class="stars">★★★★☆</span> 4.3
-          </div>
-          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
-        </div>
-      </div>
-
-      <div class="tool-card" onclick="goTo('detail')">
-        <div class="tool-logo claude">C</div>
-        <div class="tool-content">
-          <h3>Claude</h3>
-          <div class="tool-org">Anthropic · Asistente IA avanzado</div>
-          <div class="tool-desc">Excelente para redacción de documentos largos, análisis crítico y explicaciones detalladas. Alta capacidad de razonamiento para tareas complejas.</div>
-          <div class="tool-tags">
-            <span class="tag-pill green">Gratuita</span>
-            <span class="tag-pill">Documentos</span>
-            <span class="tag-pill">Análisis</span>
-            <span class="tag-pill">Español</span>
-          </div>
-        </div>
-        <div class="tool-actions">
-          <div class="match-badge" style="background:var(--ink2)">88% compatibilidad</div>
-          <div class="tool-rating">
-            <span class="stars">★★★★★</span> 4.7
-          </div>
-          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
 
-<!-- ===== PANTALLA 4: DETALLE ===== -->
-<div id="detail" class="page">
-  <div class="detail-layout">
-
-    <button class="detail-back" onclick="goTo('results')">← Volver a resultados</button>
-
-    <div class="detail-header">
-      <div class="detail-logo gpt">G</div>
-      <div class="detail-info">
-        <h1>ChatGPT</h1>
-        <div class="org">OpenAI · Asistente conversacional de inteligencia artificial</div>
-        <div class="detail-badges">
-          <span class="tag-pill green">Gratuita</span>
-          <span class="tag-pill orange">También versión Plus: $20/mes</span>
-          <span class="tag-pill">Web</span>
-          <span class="tag-pill">Móvil</span>
-          <span class="tag-pill">Español</span>
-        </div>
+<!-- ==================== SCREEN 3: RESULTS ==================== -->
+<div class="page" id="results">
+  <div class="results-container">
+    <div class="results-header">
+      <div>
+        <h2>Herramientas recomendadas</h2>
+        <p id="results-subtitle">Basadas en tu perfil y tareas seleccionadas</p>
       </div>
+      <div class="results-meta" id="results-meta"></div>
     </div>
 
-    <div class="detail-section">
-      <h2>¿Por qué la recomendamos para ti?</h2>
-      <div class="why-box">
-        Como estudiante de Tecnología/Sistemas que necesita apoyo en redacción y escritura, ChatGPT es la herramienta más versátil y con menor curva de aprendizaje. Te permite generar borradores, corregir textos, explicar conceptos técnicos y obtener ejemplos de código, todo desde una sola interfaz conversacional.
-      </div>
-      <div style="display:flex;gap:16px;">
-        <div style="text-align:center;flex:1;padding:14px;background:var(--accent-light);border-radius:var(--radius-sm);">
-          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--accent)">98%</div>
-          <div style="font-size:12px;color:var(--ink2)">Compatibilidad</div>
-        </div>
-        <div style="text-align:center;flex:1;padding:14px;background:var(--surface2);border-radius:var(--radius-sm);">
-          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)">★ 4.8</div>
-          <div style="font-size:12px;color:var(--ink2)">Valoración usuarios</div>
-        </div>
-        <div style="text-align:center;flex:1;padding:14px;background:var(--surface2);border-radius:var(--radius-sm);">
-          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)">Gratis</div>
-          <div style="font-size:12px;color:var(--ink2)">Costo base</div>
-        </div>
-      </div>
+    <div class="sort-bar">
+      <span>Ordenar por:</span>
+      <button class="sort-btn active" id="sort-match" onclick="sortResults('match')">Más relevante</button>
+      <button class="sort-btn" id="sort-free" onclick="sortResults('free')">Gratuitas primero</button>
+      <button class="sort-btn" id="sort-name" onclick="sortResults('name')">A–Z</button>
     </div>
 
-    <div class="detail-section">
-      <h2>Características principales</h2>
-      <div class="feature-row">
-        <div class="feat-icon">✅</div>
-        <div>
-          <div class="feat-label">Disponible en versión gratuita</div>
-          <div class="feat-desc">Acceso completo al modelo GPT-4o mini sin necesidad de pago</div>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="feat-icon">✅</div>
-        <div>
-          <div class="feat-label">Soporte nativo en español</div>
-          <div class="feat-desc">Comprende y responde en español con alta precisión</div>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="feat-icon">✅</div>
-        <div>
-          <div class="feat-label">Carga y análisis de documentos</div>
-          <div class="feat-desc">Puede leer PDFs, Word y otros archivos para analizarlos</div>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="feat-icon">✅</div>
-        <div>
-          <div class="feat-label">Generación y depuración de código</div>
-          <div class="feat-desc">Útil para tareas de programación y proyectos técnicos</div>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="feat-icon">⚠️</div>
-        <div>
-          <div class="feat-label">Funciones avanzadas requieren suscripción Plus</div>
-          <div class="feat-desc">GPT-4o completo, memoria avanzada y plugins: $20/mes</div>
-        </div>
-      </div>
-    </div>
+    <div class="tools-grid" id="tools-grid"></div>
 
-    <div class="detail-section">
-      <h2>Cómo empezar a usarlo</h2>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">1️⃣</div>
-          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Crear cuenta</div>
-          <div style="font-size:12px;color:var(--ink2)">Regístrate gratis en chatgpt.com</div>
-        </div>
-        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">2️⃣</div>
-          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Describir la tarea</div>
-          <div style="font-size:12px;color:var(--ink2)">Escribe qué necesitas en el chat</div>
-        </div>
-        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
-          <div style="font-size:24px;margin-bottom:8px;">3️⃣</div>
-          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Iterar y mejorar</div>
-          <div style="font-size:12px;color:var(--ink2)">Pide ajustes hasta obtener el resultado</div>
-        </div>
-      </div>
-      <div class="cta-row">
-        <button class="btn-primary">Ir a ChatGPT ↗</button>
-        <button class="btn-outline" onclick="goTo('results')">Ver otras opciones</button>
-      </div>
+    <div style="text-align:center;margin-top:32px;">
+      <button class="btn-outline" onclick="goTo('catalog')">Ver catálogo completo →</button>
     </div>
-
   </div>
 </div>
 
+<!-- ==================== SCREEN 4: DETAIL ==================== -->
+<div class="page" id="detail">
+  <div class="detail-container">
+    <div class="detail-back" onclick="goTo('results')">← Volver a resultados</div>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 5: CATALOG ==================== -->
+<div class="page" id="catalog">
+  <div class="catalog-container">
+    <div class="catalog-header">
+      <h2>Catálogo de herramientas</h2>
+      <p>Explora todas las herramientas de IA evaluadas por OrientaIA</p>
+    </div>
+
+    <div class="catalog-controls">
+      <div class="search-box">
+        <span style="color:var(--ink3)">🔍</span>
+        <input type="text" id="catalog-search" placeholder="Buscar herramienta..." oninput="filterCatalog()">
+      </div>
+      <button class="filter-chip active" data-filter="all" onclick="setCatalogFilter(this,'all')">Todas</button>
+      <button class="filter-chip" data-filter="writing" onclick="setCatalogFilter(this,'writing')">Escritura</button>
+      <button class="filter-chip" data-filter="code" onclick="setCatalogFilter(this,'code')">Código</button>
+      <button class="filter-chip" data-filter="design" onclick="setCatalogFilter(this,'design')">Diseño</button>
+      <button class="filter-chip" data-filter="research" onclick="setCatalogFilter(this,'research')">Investigación</button>
+      <button class="filter-chip" data-filter="free" onclick="setCatalogFilter(this,'free')">Gratuitas</button>
+    </div>
+
+    <div class="tools-grid" id="catalog-grid"></div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 6: PROFILE ==================== -->
+<div class="page" id="profile">
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar">O</div>
+      <div class="profile-info">
+        <h2>Mi perfil</h2>
+        <p id="profile-role-line">Configura tu perfil buscando una herramienta</p>
+      </div>
+    </div>
+
+    <!-- Favorites -->
+    <div class="profile-section">
+      <div class="profile-section-header">
+        <h3>⭐ Herramientas guardadas</h3>
+        <span id="favs-count">0 guardadas</span>
+      </div>
+      <div id="favs-container"></div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- History -->
+    <div class="profile-section">
+      <div class="profile-section-header">
+        <h3>🕐 Historial de búsquedas</h3>
+        <button class="btn-ghost" id="clear-history-btn" onclick="clearHistory()" style="font-size:12px;color:var(--accent2)">Limpiar</button>
+      </div>
+      <div id="history-container"></div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Feedback -->
+    <div class="feedback-section">
+      <h3>¿Qué te parece OrientaIA?</h3>
+      <p>Tu opinión nos ayuda a mejorar las recomendaciones para ti y otros usuarios.</p>
+      <div class="feedback-btns">
+        <button class="feedback-btn" onclick="sendFeedback('excelente')">😍 Excelente</button>
+        <button class="feedback-btn" onclick="sendFeedback('buena')">👍 Buena</button>
+        <button class="feedback-btn" onclick="sendFeedback('mejorar')">💡 Puede mejorar</button>
+        <button class="feedback-btn" onclick="sendFeedback('sugerencia')">✍️ Tengo una sugerencia</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
 <script>
-  let currentRole = 'estudiante';
-  let wizardStep = 1;
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const STATE = {
+  role: null,
+  area: null,
+  tasks: [],
+  budget: 'free',
+  favorites: JSON.parse(sessionStorage.getItem('orientaia_favs') || '[]'),
+  history: JSON.parse(sessionStorage.getItem('orientaia_history') || '[]'),
+  currentTool: null,
+  currentResults: [],
+  sortMode: 'match'
+};
 
-  function goTo(screen) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(screen).classList.add('active');
-    window.scrollTo(0, 0);
+// ─── TOOLS DATABASE ──────────────────────────────────────────────────────────
+const TOOLS = [
+  {
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    emoji: '💬',
+    category: 'Asistente de IA general',
+    developer: 'OpenAI',
+    desc: 'El asistente de IA más popular del mundo. Ideal para redacción, análisis, responder preguntas, generar ideas y programar.',
+    tasks: ['writing', 'analysis', 'code', 'research', 'communication', 'translation'],
+    roles: ['estudiante', 'profesional', 'emprendedor', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (limitado)',
+    pricePaid: 'USD $20/mes (Plus)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Muy versátil', 'Interfaz intuitiva', 'Memoria de contexto', 'Plugins y GPTs personalizados'],
+    cons: ['Puede alucinar datos', 'Límites en versión gratuita', 'Requiere verificar fuentes'],
+    useCases: ['Redactar correos y reportes', 'Resumir documentos largos', 'Generar código básico', 'Crear presentaciones de texto', 'Traducir contenido'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'GPT-4o mini, límites diarios', highlight: false },
+      { name: 'Plus', price: 'USD $20/mes', desc: 'GPT-4o, acceso prioritario, plugins', highlight: true },
+      { name: 'Team', price: 'USD $25/usuario', desc: 'Para equipos, mayor contexto', highlight: false }
+    ],
+    howTo: ['Ve a chat.openai.com y crea una cuenta gratuita', 'Escribe tu solicitud en el cuadro de texto con el mayor detalle posible', 'Revisa la respuesta y pide ajustes si es necesario', 'Usa el botón de copiar para exportar el contenido generado'],
+    link: 'https://chat.openai.com',
+    tags: ['Escritura', 'Código', 'Análisis', 'Gratis']
+  },
+  {
+    id: 'claude',
+    name: 'Claude',
+    emoji: '🧠',
+    category: 'Asistente de IA avanzado',
+    developer: 'Anthropic',
+    desc: 'Asistente de IA con capacidad de procesar textos muy largos. Excelente para análisis profundo, redacción académica y razonamiento complejo.',
+    tasks: ['writing', 'analysis', 'research', 'code', 'communication'],
+    roles: ['estudiante', 'profesional', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (100K tokens)',
+    pricePaid: 'USD $20/mes (Pro)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Ventana de contexto muy grande', 'Razonamiento detallado', 'Honesto sobre limitaciones', 'Excelente para textos largos'],
+    cons: ['Sin acceso a internet en tiempo real', 'Menos opciones de integración', 'Límites en plan gratuito'],
+    useCases: ['Análisis de documentos extensos', 'Redacción académica y técnica', 'Revisión de contratos o reportes', 'Depuración de código complejo', 'Investigación y síntesis'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'Claude 3.5 Haiku, límite mensual', highlight: false },
+      { name: 'Pro', price: 'USD $20/mes', desc: 'Claude 3.7 Sonnet, proyectos, prioridad', highlight: true }
+    ],
+    howTo: ['Crea una cuenta en claude.ai', 'Adjunta documentos o pega texto directamente si necesitas analizar algo', 'Formula preguntas específicas con contexto claro', 'Usa proyectos (Pro) para organizar trabajo recurrente'],
+    link: 'https://claude.ai',
+    tags: ['Análisis', 'Investigación', 'Escritura', 'Gratis']
+  },
+  {
+    id: 'gemini',
+    name: 'Gemini',
+    emoji: '✨',
+    category: 'IA multimodal de Google',
+    developer: 'Google DeepMind',
+    desc: 'IA de Google con búsqueda en tiempo real, análisis de imágenes y documentos. Se integra con todo el ecosistema Google (Docs, Sheets, Gmail).',
+    tasks: ['writing', 'research', 'analysis', 'presentations', 'communication'],
+    roles: ['estudiante', 'profesional', 'empresa', 'emprendedor'],
+    hasFree: true,
+    priceFree: 'Gratis',
+    pricePaid: 'USD $20/mes (Advanced)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Información actualizada en tiempo real', 'Integración nativa con Google Workspace', 'Análisis de imágenes y PDFs', 'Disponible en español'],
+    cons: ['A veces impreciso en temas especializados', 'Integración avanzada solo en planes de pago', 'Puede ser inconsistente'],
+    useCases: ['Buscar información actualizada', 'Analizar imágenes y gráficos', 'Redactar en Google Docs con IA', 'Resumir correos en Gmail', 'Crear presentaciones en Slides'],
+    plans: [
+      { name: 'Gemini', price: '$0', desc: 'Gemini 1.5 Flash, gratuito', highlight: false },
+      { name: 'Advanced', price: 'USD $20/mes', desc: 'Gemini Ultra, integración Workspace', highlight: true }
+    ],
+    howTo: ['Ve a gemini.google.com o accede desde Gmail/Docs', 'Para integración con Workspace activa Gemini en tu cuenta Google', 'Escribe tu consulta o sube una imagen/archivo para analizar', 'Usa @menciones en Workspace para llamar a Gemini en contexto'],
+    link: 'https://gemini.google.com',
+    tags: ['Google', 'Búsqueda', 'Presentaciones', 'Gratis']
+  },
+  {
+    id: 'copilot',
+    name: 'GitHub Copilot',
+    emoji: '🤖',
+    category: 'Asistente de programación',
+    developer: 'GitHub / Microsoft',
+    desc: 'IA especializada en programación. Sugiere código en tiempo real mientras escribes, explica funciones y detecta errores en múltiples lenguajes.',
+    tasks: ['code', 'automation'],
+    roles: ['profesional', 'estudiante', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (30 días trial / estudiantes)',
+    pricePaid: 'USD $10/mes (Individual)',
+    budget: ['low', 'medium'],
+    pros: ['Autocompletado inteligente en tiempo real', 'Soporta +20 lenguajes', 'Se integra a VS Code, JetBrains', 'Copilot Chat para preguntas en contexto'],
+    cons: ['Requiere suscripción para uso continuo', 'Puede generar código inseguro', 'Necesita revisión humana'],
+    useCases: ['Autocompletar funciones y clases', 'Generar tests automáticamente', 'Explicar código heredado', 'Documentar funciones', 'Detectar y corregir bugs'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'Limitado, trial 30 días', highlight: false },
+      { name: 'Individual', price: 'USD $10/mes', desc: 'Uso ilimitado en IDEs', highlight: true },
+      { name: 'Business', price: 'USD $19/usuario', desc: 'Políticas de empresa, logs', highlight: false }
+    ],
+    howTo: ['Instala la extensión GitHub Copilot en VS Code o tu IDE', 'Inicia sesión con tu cuenta GitHub', 'Empieza a escribir código y acepta sugerencias con Tab', 'Usa Copilot Chat (Ctrl+I) para hacer preguntas sobre tu código'],
+    link: 'https://github.com/features/copilot',
+    tags: ['Código', 'IDE', 'Programación']
+  },
+  {
+    id: 'grammarly',
+    name: 'Grammarly',
+    emoji: '📝',
+    category: 'Corrección y escritura',
+    developer: 'Grammarly Inc.',
+    desc: 'Herramienta líder de corrección gramatical y mejora de escritura. Detecta errores, mejora el estilo y adapta el tono del texto a tu audiencia.',
+    tasks: ['writing', 'communication'],
+    roles: ['estudiante', 'profesional', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (funciones básicas)',
+    pricePaid: 'USD $12/mes (Premium)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Corrección gramatical precisa', 'Sugerencias de tono y claridad', 'Extensión para navegador y Office', 'Funciona en tiempo real'],
+    cons: ['Funciones avanzadas son de pago', 'Principalmente en inglés', 'Limitado para español'],
+    useCases: ['Revisar correos profesionales', 'Mejorar trabajos académicos', 'Pulir artículos y blogs', 'Adaptar tono formal/informal', 'Detectar plagio (Premium)'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'Corrección básica', highlight: false },
+      { name: 'Premium', price: 'USD $12/mes', desc: 'IA avanzada, tono, claridad', highlight: true },
+      { name: 'Business', price: 'USD $15/usuario', desc: 'Equipos, brand voice', highlight: false }
+    ],
+    howTo: ['Instala la extensión de Chrome o el app de escritorio', 'Crea una cuenta gratuita en grammarly.com', 'Escribe o pega tu texto para ver sugerencias en tiempo real', 'Acepta o rechaza cada sugerencia según tu criterio'],
+    link: 'https://www.grammarly.com',
+    tags: ['Escritura', 'Corrección', 'Inglés', 'Gratis']
+  },
+  {
+    id: 'notionai',
+    name: 'Notion AI',
+    emoji: '📓',
+    category: 'Productividad y organización',
+    developer: 'Notion Labs',
+    desc: 'IA integrada en Notion para redactar, resumir, traducir y organizar notas. Perfecto si ya usas Notion para gestionar proyectos y documentación.',
+    tasks: ['writing', 'research', 'communication', 'presentations'],
+    roles: ['estudiante', 'profesional', 'empresa', 'emprendedor'],
+    hasFree: false,
+    priceFree: 'Prueba gratuita',
+    pricePaid: 'USD $10/mes (add-on)',
+    budget: ['low', 'medium'],
+    pros: ['Integrado en tu espacio de trabajo', 'Resume y mejora notas en un clic', 'Traduce y adapta tono directamente en documentos', 'Genera tablas y listas automáticamente'],
+    cons: ['Requiere usar Notion como plataforma base', 'Costo adicional al plan Notion', 'Menos potente que modelos dedicados'],
+    useCases: ['Resumir notas de reuniones', 'Generar borradores de documentos', 'Traducir páginas al instante', 'Crear listas de tareas y planes', 'Organizar proyectos con IA'],
+    plans: [
+      { name: 'Notion Free', price: '$0', desc: 'Sin AI, páginas ilimitadas', highlight: false },
+      { name: '+AI Add-on', price: 'USD $10/mes', desc: 'AI ilimitada en cualquier plan', highlight: true }
+    ],
+    howTo: ['Crea o inicia sesión en tu cuenta de Notion', 'Activa el add-on de Notion AI en configuración', 'En cualquier página, escribe "/" y selecciona opciones de IA', 'Selecciona texto existente y pide a la IA que lo mejore o resuma'],
+    link: 'https://www.notion.so/product/ai',
+    tags: ['Productividad', 'Notas', 'Organización']
+  },
+  {
+    id: 'canva',
+    name: 'Canva AI',
+    emoji: '🎨',
+    category: 'Diseño gráfico con IA',
+    developer: 'Canva',
+    desc: 'Plataforma de diseño con funciones de IA: generación de imágenes, fondos, textos y edición inteligente. Ideal para crear materiales visuales sin ser diseñador.',
+    tasks: ['design', 'presentations', 'communication'],
+    roles: ['estudiante', 'profesional', 'emprendedor', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (con límites)',
+    pricePaid: 'USD $15/mes (Pro)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Muy fácil de usar sin experiencia en diseño', 'Plantillas profesionales', 'Generación de imágenes con IA', 'Colaboración en equipo'],
+    cons: ['Assets premium requieren plan de pago', 'Generación de imágenes limitada en free', 'Resultados pueden ser genéricos'],
+    useCases: ['Crear presentaciones profesionales', 'Diseñar posts para redes sociales', 'Generar imágenes con IA', 'Crear flyers e infografías', 'Editar fotos con herramientas IA'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'Plantillas básicas, 5 generaciones IA', highlight: false },
+      { name: 'Pro', price: 'USD $15/mes', desc: 'Assets premium, IA ilimitada', highlight: true },
+      { name: 'Teams', price: 'USD $30/equipo', desc: 'Colaboración, brand kit', highlight: false }
+    ],
+    howTo: ['Crea una cuenta gratis en canva.com', 'Elige una plantilla o empieza desde cero', 'Usa "Generar imagen" en el panel lateral para crear con IA', 'Edita colores, fuentes y elementos según tu marca'],
+    link: 'https://www.canva.com',
+    tags: ['Diseño', 'Presentaciones', 'Imágenes', 'Gratis']
+  },
+  {
+    id: 'deepl',
+    name: 'DeepL',
+    emoji: '🌐',
+    category: 'Traducción avanzada',
+    developer: 'DeepL SE',
+    desc: 'El traductor de IA más preciso del mercado. Produce traducciones naturales en más de 30 idiomas con matices contextuales y opciones de tono formal/informal.',
+    tasks: ['translation', 'writing', 'communication'],
+    roles: ['estudiante', 'profesional', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (hasta 500,000 caracteres/mes)',
+    pricePaid: 'USD $8.74/mes (Pro Starter)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Traducciones muy naturales y precisas', 'Soporte de tono formal/informal', 'Traduce archivos Word/PDF enteros', 'API disponible'],
+    cons: ['Número de idiomas menor que Google Translate', 'Límites en versión gratuita', 'Archivos grandes solo en Pro'],
+    useCases: ['Traducir documentos académicos y técnicos', 'Localizar contenido de marketing', 'Revisar y mejorar traducciones existentes', 'Traducir correos profesionales', 'Internacionalizar sitios web'],
+    plans: [
+      { name: 'Free', price: '$0', desc: '500K caracteres/mes, sin archivos', highlight: false },
+      { name: 'Pro Starter', price: 'USD $8.74/mes', desc: 'Archivos, sin límite de caracteres', highlight: true }
+    ],
+    howTo: ['Ve a deepl.com sin necesidad de registrarte para uso básico', 'Pega o escribe tu texto en el panel izquierdo', 'Selecciona los idiomas de origen y destino', 'Para archivos, arrastra tu documento Word o PDF al panel'],
+    link: 'https://www.deepl.com',
+    tags: ['Traducción', 'Idiomas', 'Gratis']
+  },
+  {
+    id: 'gamma',
+    name: 'Gamma',
+    emoji: '📊',
+    category: 'Presentaciones con IA',
+    developer: 'Gamma Tech',
+    desc: 'Genera presentaciones, documentos y páginas web profesionales desde un prompt en segundos. Diseño automático sin necesidad de PowerPoint.',
+    tasks: ['presentations', 'writing', 'communication'],
+    roles: ['estudiante', 'profesional', 'emprendedor', 'empresa'],
+    hasFree: true,
+    priceFree: 'Gratis (400 créditos iniciales)',
+    pricePaid: 'USD $10/mes (Plus)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Genera presentaciones completas en segundos', 'Diseño profesional automático', 'Exporta a PDF y PowerPoint', 'Modo colaborativo'],
+    cons: ['Créditos se agotan en versión gratuita', 'Personalización limitada vs PowerPoint', 'Contenido puede necesitar revisión'],
+    useCases: ['Crear pitch decks para inversores', 'Presentaciones académicas', 'Reportes ejecutivos visuales', 'Landing pages de proyectos', 'Propuestas de negocio'],
+    plans: [
+      { name: 'Free', price: '$0', desc: '400 créditos, marca de agua', highlight: false },
+      { name: 'Plus', price: 'USD $10/mes', desc: 'Créditos mensuales, sin marca de agua', highlight: true },
+      { name: 'Pro', price: 'USD $20/mes', desc: 'Créditos ilimitados, analytics', highlight: false }
+    ],
+    howTo: ['Regístrate gratis en gamma.app', 'Haz clic en "Nuevo" y elige "Presentación con IA"', 'Escribe el tema o pega tu contenido existente', 'Selecciona un estilo visual y genera; luego edita a tu gusto'],
+    link: 'https://gamma.app',
+    tags: ['Presentaciones', 'Pitch', 'Diseño', 'Gratis']
+  },
+  {
+    id: 'perplexity',
+    name: 'Perplexity AI',
+    emoji: '🔍',
+    category: 'Búsqueda inteligente',
+    developer: 'Perplexity AI Inc.',
+    desc: 'Motor de búsqueda con IA que responde preguntas con fuentes citadas y actualizadas. Ideal para investigación y verificación de información en tiempo real.',
+    tasks: ['research', 'analysis', 'writing'],
+    roles: ['estudiante', 'profesional', 'emprendedor'],
+    hasFree: true,
+    priceFree: 'Gratis (con límites)',
+    pricePaid: 'USD $20/mes (Pro)',
+    budget: ['free', 'low', 'medium'],
+    pros: ['Respuestas con fuentes citadas y verificables', 'Información actualizada en tiempo real', 'Modo "Focus" para fuentes académicas, Reddit, etc.', 'Interfaz conversacional con contexto'],
+    cons: ['Puede confundir fuentes ocasionalmente', 'Funciones avanzadas de pago', 'Profundidad menor que ChatGPT en razonamiento'],
+    useCases: ['Investigar temas con fuentes confiables', 'Verificar datos y estadísticas', 'Revisar literatura académica', 'Monitorear tendencias del sector', 'Responder preguntas técnicas con contexto'],
+    plans: [
+      { name: 'Free', price: '$0', desc: 'Búsqueda estándar, límite diario Pro', highlight: false },
+      { name: 'Pro', price: 'USD $20/mes', desc: 'Búsquedas ilimitadas, GPT-4, Claude', highlight: true }
+    ],
+    howTo: ['Ve a perplexity.ai sin necesidad de cuenta para consultas básicas', 'Escribe tu pregunta de forma natural', 'Usa "Focus" para filtrar por tipo de fuente (académica, noticias, etc.)', 'Haz clic en cada cita para verificar la fuente original'],
+    link: 'https://www.perplexity.ai',
+    tags: ['Investigación', 'Búsqueda', 'Fuentes', 'Gratis']
+  }
+];
+
+// ─── WIZARD STEP ─────────────────────────────────────────────────────────────
+let wizardStep = 1;
+
+function goTo(screen) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(screen).classList.add('active');
+  window.scrollTo(0, 0);
+
+  // Update nav active state
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (screen === 'catalog') document.getElementById('nav-catalog').classList.add('active');
+  if (screen === 'profile') document.getElementById('nav-profile').classList.add('active');
+
+  if (screen === 'catalog') renderCatalog();
+  if (screen === 'profile') renderProfile();
+  if (screen === 'wizard') {
+    wizardStep = 1;
+    renderWizardStep();
+  }
+}
+
+function selectRole(role) {
+  STATE.role = role;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('rc-' + role).classList.add('selected');
+}
+
+function toggleTag(el) {
+  el.classList.toggle('selected');
+  const task = el.dataset.task;
+  if (el.classList.contains('selected')) {
+    if (!STATE.tasks.includes(task)) STATE.tasks.push(task);
+  } else {
+    STATE.tasks = STATE.tasks.filter(t => t !== task);
+  }
+}
+
+function selectBudget(budget, el) {
+  STATE.budget = budget;
+  document.querySelectorAll('.budget-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function nextStep() {
+  if (wizardStep === 1) {
+    if (!STATE.role) { showToast('Selecciona un perfil para continuar'); return; }
+    STATE.area = document.getElementById('area-select').value;
+  }
+  if (wizardStep === 2 && STATE.tasks.length === 0) {
+    showToast('Selecciona al menos una tarea'); return;
+  }
+  wizardStep++;
+  if (wizardStep > 3) { getRecommendations(); return; }
+  renderWizardStep();
+}
+
+function prevStep() {
+  wizardStep--;
+  if (wizardStep < 1) { goTo('home'); return; }
+  renderWizardStep();
+}
+
+function renderWizardStep() {
+  document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + wizardStep).classList.add('active');
+
+  for (let i = 1; i <= 3; i++) {
+    const wc = document.getElementById('wc' + i);
+    const sl = document.getElementById('sl' + i);
+    wc.className = 'wc';
+    if (i < wizardStep) {
+      wc.className = 'wc done';
+      wc.textContent = '';
+    } else if (i === wizardStep) {
+      wc.className = 'wc active';
+      wc.textContent = i;
+    } else {
+      wc.textContent = i;
+    }
+    sl.className = i === wizardStep ? 'active-label' : '';
   }
 
-  function selectRoleAndGo(role) {
-    currentRole = role;
-    goTo('wizard');
-    selectRole(role);
+  for (let i = 1; i <= 2; i++) {
+    const line = document.getElementById('wl' + i);
+    line.className = i < wizardStep ? 'wc-line done' : 'wc-line';
+  }
+}
+
+// ─── RECOMMENDATION ALGORITHM ─────────────────────────────────────────────────
+function scoreTool(tool) {
+  let score = 0;
+  let taskOverlap = 0;
+
+  if (STATE.tasks.length > 0) {
+    const matched = STATE.tasks.filter(t => tool.tasks.includes(t)).length;
+    taskOverlap = matched / STATE.tasks.length;
+    score += taskOverlap * 50;
   }
 
-  function selectRole(role) {
-    currentRole = role;
-    document.querySelectorAll('.role-mini').forEach(r => r.classList.remove('selected'));
-    const el = document.getElementById('rm-' + role);
-    if (el) el.classList.add('selected');
+  if (tool.roles.includes(STATE.role)) score += 30;
+
+  const budgetOk = tool.budget.includes(STATE.budget) ||
+    (STATE.budget === 'medium' && (tool.budget.includes('low') || tool.budget.includes('free'))) ||
+    (STATE.budget === 'low' && tool.budget.includes('free'));
+  if (budgetOk) score += 20;
+
+  return Math.round(score);
+}
+
+function getRecommendations() {
+  const scored = TOOLS.map(t => ({ ...t, score: scoreTool(t) }))
+    .filter(t => t.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  STATE.currentResults = scored.length > 0 ? scored : TOOLS.map(t => ({ ...t, score: 10 }));
+  STATE.sortMode = 'match';
+
+  // Save to history
+  const entry = {
+    id: Date.now(),
+    role: STATE.role,
+    area: STATE.area,
+    tasks: [...STATE.tasks],
+    budget: STATE.budget,
+    date: new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+  };
+  STATE.history.unshift(entry);
+  if (STATE.history.length > 10) STATE.history.pop();
+  sessionStorage.setItem('orientaia_history', JSON.stringify(STATE.history));
+
+  goTo('results');
+  renderResults();
+}
+
+function renderResults() {
+  // Meta tags
+  const meta = document.getElementById('results-meta');
+  meta.innerHTML = '';
+  if (STATE.role) {
+    const roles = { estudiante: '🎓 Estudiante', profesional: '💼 Profesional', empresa: '🏢 Empresa', emprendedor: '🚀 Emprendedor' };
+    meta.innerHTML += `<span class="meta-tag role-tag">${roles[STATE.role]}</span>`;
+  }
+  STATE.tasks.forEach(t => {
+    const labels = { writing: 'Escritura', analysis: 'Análisis', code: 'Código', design: 'Diseño',
+      presentations: 'Presentaciones', research: 'Investigación', automation: 'Automatización',
+      translation: 'Traducción', audio_video: 'Audio/Video', communication: 'Comunicación' };
+    meta.innerHTML += `<span class="meta-tag">${labels[t] || t}</span>`;
+  });
+
+  const subtitle = document.getElementById('results-subtitle');
+  subtitle.textContent = `${STATE.currentResults.length} herramientas encontradas para tu perfil`;
+
+  // Sort
+  let sorted = [...STATE.currentResults];
+  if (STATE.sortMode === 'free') sorted = sorted.sort((a, b) => (b.hasFree ? 1 : 0) - (a.hasFree ? 1 : 0));
+  if (STATE.sortMode === 'name') sorted = sorted.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Render cards
+  const grid = document.getElementById('tools-grid');
+  grid.innerHTML = sorted.map(tool => buildToolCard(tool, true)).join('');
+
+  // Sort buttons
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sort-' + STATE.sortMode).classList.add('active');
+}
+
+function sortResults(mode) {
+  STATE.sortMode = mode;
+  renderResults();
+}
+
+// ─── TOOL CARD BUILDER ────────────────────────────────────────────────────────
+function buildToolCard(tool, showScore) {
+  const isFav = STATE.favorites.includes(tool.id);
+  const scoreHtml = showScore ? `
+    <div class="match-bar-wrap">
+      <div class="match-bar-label">Coincidencia con tu perfil</div>
+      <div class="match-bar"><div class="match-bar-fill" style="width:${tool.score || 50}%"></div></div>
+    </div>` : '';
+  return `
+    <div class="tool-card" onclick="openTool('${tool.id}')">
+      <div class="tool-card-top">
+        <div class="tool-logo">${tool.emoji}</div>
+        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event,'${tool.id}')" title="${isFav ? 'Quitar de favoritos' : 'Guardar'}">${isFav ? '♥' : '♡'}</button>
+      </div>
+      <div class="tool-name">${tool.name}</div>
+      <div class="tool-category">${tool.category}</div>
+      <div class="tool-desc">${tool.desc}</div>
+      <div class="tool-tags">${tool.tags.map(t => `<span class="tool-tag">${t}</span>`).join('')}</div>
+      <div class="tool-footer">
+        ${showScore ? `<span class="score-badge">${tool.score || 50}% match</span>` : '<span></span>'}
+        <span class="price-badge ${tool.hasFree ? 'free' : ''}">${tool.hasFree ? '🆓 Gratis disponible' : '💳 De pago'}</span>
+      </div>
+      ${scoreHtml}
+    </div>`;
+}
+
+// ─── DETAIL PAGE ──────────────────────────────────────────────────────────────
+function openTool(id) {
+  const tool = TOOLS.find(t => t.id === id);
+  if (!tool) return;
+  STATE.currentTool = id;
+
+  const isFav = STATE.favorites.includes(id);
+
+  const plansHtml = tool.plans.map(p => `
+    <div class="plan-card ${p.highlight ? 'highlight' : ''}">
+      <div class="plan-name">${p.name}</div>
+      <div class="plan-price">${p.price}</div>
+      <div class="plan-desc">${p.desc}</div>
+    </div>`).join('');
+
+  const howHtml = tool.howTo.map(step => `
+    <div class="how-step">
+      <div class="step-num"></div>
+      <p>${step}</p>
+    </div>`).join('');
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-hero">
+      <div class="detail-logo">${tool.emoji}</div>
+      <div class="detail-info">
+        <h1>${tool.name}</h1>
+        <div class="detail-cat">${tool.category} · ${tool.developer}</div>
+        <div class="detail-badges">
+          ${tool.hasFree ? '<span class="badge badge-green">🆓 Gratis disponible</span>' : '<span class="badge badge-orange">💳 Solo de pago</span>'}
+          <span class="badge badge-gray">${tool.priceFree || tool.pricePaid}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>¿Qué es ${tool.name}?</h3>
+      <p>${tool.desc}</p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Ventajas y limitaciones</h3>
+      <div class="pros-cons">
+        <div class="pros-list"><h4>✅ Ventajas</h4><ul>${tool.pros.map(p => `<li>${p}</li>`).join('')}</ul></div>
+        <div class="cons-list"><h4>⚠️ Limitaciones</h4><ul>${tool.cons.map(c => `<li>${c}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Casos de uso principales</h3>
+      <div class="use-cases-grid">${tool.useCases.map(u => `<div class="use-case-item">${u}</div>`).join('')}</div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Planes y precios</h3>
+      <div class="plans-grid">${plansHtml}</div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Cómo empezar paso a paso</h3>
+      <div class="how-to-steps">${howHtml}</div>
+    </div>
+
+    <div class="detail-cta">
+      <button class="btn-primary" onclick="window.open('${tool.link}', '_blank')">Ir a ${tool.name} →</button>
+      <button class="btn-outline ${isFav ? 'active' : ''}" id="detail-fav-btn" onclick="toggleFavoriteDetail('${tool.id}')">
+        ${isFav ? '♥ Guardado' : '♡ Guardar herramienta'}
+      </button>
+    </div>`;
+
+  goTo('detail');
+}
+
+function toggleFavoriteDetail(id) {
+  toggleFavoriteById(id);
+  const isFav = STATE.favorites.includes(id);
+  const btn = document.getElementById('detail-fav-btn');
+  if (btn) btn.innerHTML = isFav ? '♥ Guardado' : '♡ Guardar herramienta';
+}
+
+// ─── FAVORITES ────────────────────────────────────────────────────────────────
+function toggleFavorite(event, id) {
+  event.stopPropagation();
+  toggleFavoriteById(id);
+  // Re-render the card's button
+  const btn = event.currentTarget;
+  const isFav = STATE.favorites.includes(id);
+  btn.textContent = isFav ? '♥' : '♡';
+  btn.classList.toggle('active', isFav);
+  showToast(isFav ? '⭐ Guardado en favoritos' : 'Quitado de favoritos');
+}
+
+function toggleFavoriteById(id) {
+  if (STATE.favorites.includes(id)) {
+    STATE.favorites = STATE.favorites.filter(f => f !== id);
+  } else {
+    STATE.favorites.push(id);
+  }
+  sessionStorage.setItem('orientaia_favs', JSON.stringify(STATE.favorites));
+}
+
+// ─── CATALOG ──────────────────────────────────────────────────────────────────
+let catalogFilter = 'all';
+
+function renderCatalog() {
+  filterCatalog();
+}
+
+function setCatalogFilter(el, filter) {
+  catalogFilter = filter;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterCatalog();
+}
+
+function filterCatalog() {
+  const query = (document.getElementById('catalog-search')?.value || '').toLowerCase();
+  let filtered = TOOLS;
+
+  if (catalogFilter !== 'all') {
+    if (catalogFilter === 'free') {
+      filtered = filtered.filter(t => t.hasFree);
+    } else {
+      filtered = filtered.filter(t => t.tasks.includes(catalogFilter));
+    }
   }
 
-  function nextStep() {
-    document.getElementById('wizard-step-1').style.display = 'none';
-    document.getElementById('wizard-step-2').style.display = 'block';
-    document.getElementById('wc2').textContent = '✓';
-    document.getElementById('wc2').classList.remove('current');
-    document.getElementById('wc2').classList.add('done');
-    document.getElementById('wl2').style.background = 'var(--accent)';
-    document.getElementById('wc3').classList.add('current');
+  if (query) {
+    filtered = filtered.filter(t =>
+      t.name.toLowerCase().includes(query) ||
+      t.desc.toLowerCase().includes(query) ||
+      t.tags.some(tag => tag.toLowerCase().includes(query))
+    );
   }
 
-  function prevStep() {
-    document.getElementById('wizard-step-2').style.display = 'none';
-    document.getElementById('wizard-step-1').style.display = 'block';
-    document.getElementById('wc2').textContent = '2';
-    document.getElementById('wc2').classList.add('current');
-    document.getElementById('wc2').classList.remove('done');
-    document.getElementById('wl2').style.background = 'var(--border2)';
-    document.getElementById('wc3').classList.remove('current');
+  const grid = document.getElementById('catalog-grid');
+  if (!grid) return;
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink2)">No se encontraron herramientas con ese criterio.</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(t => buildToolCard({ ...t, score: null }, false)).join('');
+}
+
+// ─── PROFILE ──────────────────────────────────────────────────────────────────
+function renderProfile() {
+  // Role line
+  const roleLine = document.getElementById('profile-role-line');
+  if (STATE.role) {
+    const roles = { estudiante: 'Estudiante', profesional: 'Profesional', empresa: 'Empresa/Equipo', emprendedor: 'Emprendedor' };
+    roleLine.textContent = `Perfil: ${roles[STATE.role]}${STATE.area ? ' · ' + STATE.area : ''}`;
   }
 
-  function toggleTag(el) {
-    el.classList.toggle('selected');
+  // Favorites
+  const favsContainer = document.getElementById('favs-container');
+  document.getElementById('favs-count').textContent = `${STATE.favorites.length} guardada${STATE.favorites.length !== 1 ? 's' : ''}`;
+  if (STATE.favorites.length === 0) {
+    favsContainer.innerHTML = `<div class="empty-state"><div class="empty-icon">⭐</div><p>Aún no has guardado ninguna herramienta.<br>Haz clic en el corazón de cualquier resultado para guardarla aquí.</p></div>`;
+  } else {
+    favsContainer.innerHTML = `<div class="favs-list">${STATE.favorites.map(id => {
+      const tool = TOOLS.find(t => t.id === id);
+      if (!tool) return '';
+      return `<div class="fav-tool-card" onclick="openTool('${tool.id}')">
+        <div class="fav-tool-logo">${tool.emoji}</div>
+        <div class="fav-tool-info">
+          <div class="fav-tool-name">${tool.name}</div>
+          <div class="fav-tool-cat">${tool.category}</div>
+        </div>
+        <button class="fav-remove" onclick="removeFav(event,'${tool.id}')" title="Quitar">✕</button>
+      </div>`;
+    }).join('')}</div>`;
   }
+
+  // History
+  const histContainer = document.getElementById('history-container');
+  const clearBtn = document.getElementById('clear-history-btn');
+  if (STATE.history.length === 0) {
+    histContainer.innerHTML = `<div class="empty-state"><div class="empty-icon">🕐</div><p>Tu historial de búsquedas aparecerá aquí.<br>Usa el asistente para buscar herramientas.</p></div>`;
+    clearBtn.style.display = 'none';
+  } else {
+    clearBtn.style.display = '';
+    const taskLabels = { writing: 'Escritura', analysis: 'Análisis', code: 'Código', design: 'Diseño',
+      presentations: 'Presentaciones', research: 'Investigación', automation: 'Automatización',
+      translation: 'Traducción', audio_video: 'Audio/Video', communication: 'Comunicación' };
+    histContainer.innerHTML = `<div class="history-list">${STATE.history.map(h => {
+      const roles = { estudiante: '🎓 Estudiante', profesional: '💼 Profesional', empresa: '🏢 Empresa', emprendedor: '🚀 Emprendedor' };
+      const taskStr = (h.tasks || []).map(t => taskLabels[t] || t).join(', ') || 'Sin tareas';
+      return `<div class="history-item" onclick="replaySearch(${h.id})">
+        <div class="history-item-info">
+          <div class="history-item-role">${roles[h.role] || h.role}</div>
+          <div class="history-item-tasks">${taskStr}</div>
+        </div>
+        <div class="history-item-date">${h.date}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+
+function removeFav(event, id) {
+  event.stopPropagation();
+  toggleFavoriteById(id);
+  renderProfile();
+  showToast('Quitado de favoritos');
+}
+
+function clearHistory() {
+  STATE.history = [];
+  sessionStorage.removeItem('orientaia_history');
+  renderProfile();
+  showToast('Historial borrado');
+}
+
+function replaySearch(histId) {
+  const entry = STATE.history.find(h => h.id === histId);
+  if (!entry) return;
+  STATE.role = entry.role;
+  STATE.area = entry.area;
+  STATE.tasks = [...entry.tasks];
+  STATE.budget = entry.budget;
+  getRecommendations();
+}
+
+// ─── FEEDBACK ─────────────────────────────────────────────────────────────────
+function sendFeedback(type) {
+  const msgs = {
+    excelente: '😍 ¡Gracias! Nos alegra que te sirva.',
+    buena: '👍 ¡Gracias por tu respuesta!',
+    mejorar: '💡 Anotado. ¡Trabajaremos en mejorar!',
+    sugerencia: '✍️ Escríbenos a orientaia@gmail.com con tu sugerencia.'
+  };
+  showToast(msgs[type] || '¡Gracias!');
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderWizardStep();
 </script>
 </body>
 </html>
