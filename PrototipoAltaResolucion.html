@@ -1056,6 +1056,244 @@
     .hero, .wizard-container, .results-container, .detail-container,
     .catalog-container, .profile-container { padding-left: 16px; padding-right: 16px; }
   }
+
+  /* ===== AUTH MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,24,20,0.55);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .auth-modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 32px 32px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none; border: none;
+    font-size: 20px; cursor: pointer;
+    color: var(--ink3); line-height: 1;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .modal-close:hover { background: var(--surface2); color: var(--ink); }
+
+  .auth-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    gap: 0;
+  }
+
+  .auth-tab {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--ink3);
+    font-family: 'DM Sans', sans-serif;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+
+  .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .auth-form { display: none; }
+  .auth-form.active { display: block; }
+
+  .auth-field { margin-bottom: 16px; }
+  .auth-field label { font-size: 13px; font-weight: 500; display: block; margin-bottom: 5px; color: var(--ink2); }
+
+  .auth-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .auth-input:focus { border-color: var(--accent); background: var(--surface); }
+
+  .auth-error {
+    font-size: 12px;
+    color: #C0392B;
+    background: #FDECEA;
+    border: 1px solid #F5C6C2;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  .auth-error.show { display: block; }
+
+  .auth-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+  }
+
+  .auth-submit:hover { opacity: 0.88; }
+
+  .auth-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0;
+    color: var(--ink3); font-size: 12px;
+  }
+
+  .auth-divider::before, .auth-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border2);
+  }
+
+  .auth-guest-btn {
+    width: 100%;
+    padding: 11px;
+    background: transparent;
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--ink2);
+    transition: all 0.15s;
+  }
+
+  .auth-guest-btn:hover { background: var(--surface2); color: var(--ink); }
+
+  /* Nav user pill */
+  .nav-user-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1.5px solid var(--border2);
+    background: var(--surface);
+    transition: all 0.15s;
+  }
+
+  .nav-user-pill:hover { border-color: var(--accent); background: var(--accent-light); }
+
+  .nav-user-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Serif Display', serif;
+    flex-shrink: 0;
+  }
+
+  #nav-user-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+  /* Profile auth banner */
+  .auth-banner {
+    background: linear-gradient(135deg, var(--accent-light), var(--accent2-light));
+    border: 1px solid rgba(45,90,61,0.15);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .auth-banner-text h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .auth-banner-text p { font-size: 13px; color: var(--ink2); }
+
+  .auth-banner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .account-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .account-card-left { display: flex; align-items: center; gap: 14px; }
+
+  .account-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .account-name { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+  .account-email { font-size: 13px; color: var(--ink2); }
+
+  .btn-logout {
+    font-size: 13px;
+    color: var(--accent2);
+    border: 1.5px solid var(--accent2);
+    background: transparent;
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .btn-logout:hover { background: var(--accent2); color: #fff; }
 </style>
 </head>
 <body>
@@ -1068,7 +1306,17 @@
   <div class="nav-links">
     <button class="nav-link" id="nav-catalog" onclick="goTo('catalog')">Catálogo</button>
     <button class="nav-link" id="nav-profile" onclick="goTo('profile')">Mi perfil</button>
-    <button class="nav-cta" onclick="goTo('wizard')">Buscar herramienta</button>
+    <div id="nav-auth-guest" style="display:flex;align-items:center;gap:8px;">
+      <button class="nav-link" onclick="openAuth('login')">Iniciar sesión</button>
+      <button class="nav-cta" onclick="goTo('wizard')">Buscar herramienta</button>
+    </div>
+    <div id="nav-auth-user" style="display:none;align-items:center;gap:8px;">
+      <div class="nav-user-pill" onclick="goTo('profile')">
+        <div class="nav-user-avatar" id="nav-user-avatar">?</div>
+        <span id="nav-user-name">Usuario</span>
+      </div>
+      <button class="nav-cta" onclick="goTo('wizard')">Buscar herramienta</button>
+    </div>
   </div>
 </nav>
 
@@ -1080,7 +1328,7 @@
   <div class="hero">
     <div class="hero-badge">✦ Más de 10 herramientas de IA evaluadas</div>
     <h1>Encuentra la herramienta de IA <em>perfecta</em> para tu trabajo</h1>
-    <p>Responde 3 preguntas rápidas y recibe recomendaciones personalizadas según tu rol, tus tareas y tu presupuesto. Sin perder tiempo probando herramientas a ciegas.</p>
+    <p>Responde unas preguntas rápidas y recibe recomendaciones personalizadas según tu rol, tus tareas y tu presupuesto. Sin perder tiempo probando herramientas a ciegas.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="goTo('wizard')">Comenzar ahora →</button>
       <button class="btn-outline" onclick="goTo('catalog')">Ver catálogo completo</button>
@@ -1325,6 +1573,9 @@
 
     <div class="section-divider"></div>
 
+    <!-- Auth banner (rendered by JS) -->
+    <div id="profile-auth-banner"></div>
+
     <!-- Feedback -->
     <div class="feedback-section">
       <h3>¿Qué te parece OrientaIA?</h3>
@@ -1339,8 +1590,208 @@
   </div>
 </div>
 
+<!-- ==================== AUTH MODAL ==================== -->
+<div class="modal-overlay" id="auth-modal" onclick="handleOverlayClick(event)">
+  <div class="auth-modal">
+    <button class="modal-close" onclick="closeAuth()" title="Cerrar">✕</button>
+
+    <div class="auth-logo">OrientaIA <span class="dot" style="width:6px;height:6px;background:var(--accent2);border-radius:50%;display:inline-block;"></span></div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Iniciar sesión</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Crear cuenta</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="auth-form active" id="form-login">
+      <div class="auth-error" id="login-error"></div>
+      <div class="auth-field">
+        <label for="login-email">Correo electrónico</label>
+        <input class="auth-input" type="email" id="login-email" placeholder="tu@correo.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label for="login-password">Contraseña</label>
+        <input class="auth-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="auth-submit" onclick="doLogin()">Iniciar sesión</button>
+      <div class="auth-divider">o continúa sin cuenta</div>
+      <button class="auth-guest-btn" onclick="continueAsGuest()">👤 Continuar como invitado</button>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="auth-form" id="form-register">
+      <div class="auth-error" id="register-error"></div>
+      <div class="auth-field">
+        <label for="reg-name">Nombre completo</label>
+        <input class="auth-input" type="text" id="reg-name" placeholder="Tu nombre" autocomplete="name">
+      </div>
+      <div class="auth-field">
+        <label for="reg-email">Correo electrónico</label>
+        <input class="auth-input" type="email" id="reg-email" placeholder="tu@correo.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label for="reg-password">Contraseña</label>
+        <input class="auth-input" type="password" id="reg-password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+      </div>
+      <div class="auth-field">
+        <label for="reg-confirm">Confirmar contraseña</label>
+        <input class="auth-input" type="password" id="reg-confirm" placeholder="Repite tu contraseña" autocomplete="new-password">
+      </div>
+      <button class="auth-submit" onclick="doRegister()">Crear cuenta</button>
+      <div class="auth-divider">o continúa sin cuenta</div>
+      <button class="auth-guest-btn" onclick="continueAsGuest()">👤 Continuar como invitado</button>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+const AUTH = { user: null };
+
+function initAuth() {
+  const session = JSON.parse(localStorage.getItem('orientaia_session') || 'null');
+  if (session && session.userId) {
+    const users = JSON.parse(localStorage.getItem('orientaia_users') || '[]');
+    const user = users.find(u => u.id === session.userId);
+    if (user) {
+      AUTH.user = { id: user.id, name: user.name, email: user.email };
+      loadUserData();
+    }
+  }
+  renderNav();
+}
+
+function loadUserData() {
+  if (!AUTH.user) return;
+  const data = JSON.parse(localStorage.getItem('orientaia_ud_' + AUTH.user.id) || '{"favorites":[],"history":[]}');
+  STATE.favorites = data.favorites || [];
+  STATE.history = data.history || [];
+}
+
+function saveUserData() {
+  if (AUTH.user) {
+    localStorage.setItem('orientaia_ud_' + AUTH.user.id, JSON.stringify({
+      favorites: STATE.favorites,
+      history: STATE.history
+    }));
+  }
+}
+
+function openAuth(tab) {
+  document.getElementById('auth-modal').classList.add('open');
+  switchAuthTab(tab || 'login');
+  clearAuthErrors();
+}
+
+function closeAuth() {
+  document.getElementById('auth-modal').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('auth-modal')) closeAuth();
+}
+
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('form-' + tab).classList.add('active');
+  clearAuthErrors();
+}
+
+function clearAuthErrors() {
+  document.querySelectorAll('.auth-error').forEach(e => { e.textContent = ''; e.classList.remove('show'); });
+}
+
+function showAuthError(formId, msg) {
+  const el = document.getElementById(formId + '-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function hashPassword(pw) {
+  let h = 0;
+  for (let i = 0; i < pw.length; i++) { h = Math.imul(31, h) + pw.charCodeAt(i) | 0; }
+  return h.toString(36);
+}
+
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-password').value;
+  if (!email || !pw) { showAuthError('login', 'Completa todos los campos.'); return; }
+
+  const users = JSON.parse(localStorage.getItem('orientaia_users') || '[]');
+  const user  = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.passwordHash === hashPassword(pw));
+
+  if (!user) { showAuthError('login', 'Correo o contraseña incorrectos.'); return; }
+
+  AUTH.user = { id: user.id, name: user.name, email: user.email };
+  localStorage.setItem('orientaia_session', JSON.stringify({ userId: user.id }));
+  loadUserData();
+  closeAuth();
+  renderNav();
+  showToast('👋 ¡Bienvenido de vuelta, ' + user.name.split(' ')[0] + '!');
+}
+
+function doRegister() {
+  const name    = document.getElementById('reg-name').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  const pw      = document.getElementById('reg-password').value;
+  const confirm = document.getElementById('reg-confirm').value;
+
+  if (!name || !email || !pw || !confirm) { showAuthError('register', 'Completa todos los campos.'); return; }
+  if (pw.length < 6) { showAuthError('register', 'La contraseña debe tener al menos 6 caracteres.'); return; }
+  if (pw !== confirm) { showAuthError('register', 'Las contraseñas no coinciden.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAuthError('register', 'Ingresa un correo válido.'); return; }
+
+  const users = JSON.parse(localStorage.getItem('orientaia_users') || '[]');
+  if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+    showAuthError('register', 'Ya existe una cuenta con ese correo.'); return;
+  }
+
+  const newUser = { id: 'u_' + Date.now(), name, email, passwordHash: hashPassword(pw) };
+  users.push(newUser);
+  localStorage.setItem('orientaia_users', JSON.stringify(users));
+
+  AUTH.user = { id: newUser.id, name: newUser.name, email: newUser.email };
+  localStorage.setItem('orientaia_session', JSON.stringify({ userId: newUser.id }));
+  saveUserData();
+  closeAuth();
+  renderNav();
+  showToast('🎉 ¡Cuenta creada! Bienvenido/a, ' + name.split(' ')[0] + '.');
+}
+
+function logout() {
+  AUTH.user = null;
+  localStorage.removeItem('orientaia_session');
+  STATE.favorites = JSON.parse(sessionStorage.getItem('orientaia_favs') || '[]');
+  STATE.history   = JSON.parse(sessionStorage.getItem('orientaia_history') || '[]');
+  renderNav();
+  goTo('home');
+  showToast('Sesión cerrada. ¡Hasta pronto!');
+}
+
+function continueAsGuest() {
+  closeAuth();
+  showToast('Continuando como invitado. Tus datos se guardarán en esta sesión.');
+}
+
+function renderNav() {
+  const guestEl = document.getElementById('nav-auth-guest');
+  const userEl  = document.getElementById('nav-auth-user');
+  if (AUTH.user) {
+    guestEl.style.display = 'none';
+    userEl.style.display  = 'flex';
+    const initials = AUTH.user.name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    document.getElementById('nav-user-avatar').textContent = initials;
+    document.getElementById('nav-user-name').textContent   = AUTH.user.name.split(' ')[0];
+  } else {
+    guestEl.style.display = 'flex';
+    userEl.style.display  = 'none';
+  }
+}
+
 // ─── STATE ────────────────────────────────────────────────────────────────────
 const STATE = {
   role: null,
@@ -1731,7 +2182,11 @@ function getRecommendations() {
   };
   STATE.history.unshift(entry);
   if (STATE.history.length > 10) STATE.history.pop();
-  sessionStorage.setItem('orientaia_history', JSON.stringify(STATE.history));
+  if (AUTH.user) {
+    saveUserData();
+  } else {
+    sessionStorage.setItem('orientaia_history', JSON.stringify(STATE.history));
+  }
 
   goTo('results');
   renderResults();
@@ -1897,7 +2352,11 @@ function toggleFavoriteById(id) {
   } else {
     STATE.favorites.push(id);
   }
-  sessionStorage.setItem('orientaia_favs', JSON.stringify(STATE.favorites));
+  if (AUTH.user) {
+    saveUserData();
+  } else {
+    sessionStorage.setItem('orientaia_favs', JSON.stringify(STATE.favorites));
+  }
 }
 
 // ─── CATALOG ──────────────────────────────────────────────────────────────────
@@ -1945,11 +2404,42 @@ function filterCatalog() {
 
 // ─── PROFILE ──────────────────────────────────────────────────────────────────
 function renderProfile() {
+  // Auth banner / account card
+  const banner = document.getElementById('profile-auth-banner');
+  if (AUTH.user) {
+    const initials = AUTH.user.name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    banner.innerHTML = `
+      <div class="account-card">
+        <div class="account-card-left">
+          <div class="account-avatar">${initials}</div>
+          <div>
+            <div class="account-name">${AUTH.user.name}</div>
+            <div class="account-email">${AUTH.user.email}</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+      </div>`;
+  } else {
+    banner.innerHTML = `
+      <div class="auth-banner">
+        <div class="auth-banner-text">
+          <h4>Crea tu cuenta gratuita</h4>
+          <p>Guarda tus herramientas favoritas y tu historial de búsquedas entre sesiones.</p>
+        </div>
+        <div class="auth-banner-btns">
+          <button class="btn-primary" onclick="openAuth('register')">Crear cuenta</button>
+          <button class="btn-outline" onclick="openAuth('login')">Iniciar sesión</button>
+        </div>
+      </div>`;
+  }
+
   // Role line
   const roleLine = document.getElementById('profile-role-line');
   if (STATE.role) {
     const roles = { estudiante: 'Estudiante', profesional: 'Profesional', empresa: 'Empresa/Equipo', emprendedor: 'Emprendedor' };
-    roleLine.textContent = `Perfil: ${roles[STATE.role]}${STATE.area ? ' · ' + STATE.area : ''}`;
+    roleLine.textContent = `Perfil de búsqueda: ${roles[STATE.role]}${STATE.area ? ' · ' + STATE.area : ''}`;
+  } else {
+    roleLine.textContent = AUTH.user ? 'Usa el asistente para guardar tu perfil de búsqueda' : 'Configura tu perfil buscando una herramienta';
   }
 
   // Favorites
@@ -2006,7 +2496,7 @@ function removeFav(event, id) {
 
 function clearHistory() {
   STATE.history = [];
-  sessionStorage.removeItem('orientaia_history');
+  if (AUTH.user) { saveUserData(); } else { sessionStorage.removeItem('orientaia_history'); }
   renderProfile();
   showToast('Historial borrado');
 }
@@ -2043,6 +2533,7 @@ function showToast(msg) {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+initAuth();
 renderWizardStep();
 </script>
 </body>
