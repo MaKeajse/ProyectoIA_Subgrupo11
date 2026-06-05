@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototipo Baja Resolución - Aplicativo Orientador IA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Balsamiq Sans', cursive;
+    background: #f0ede6;
+    color: #2a2a2a;
+    padding: 20px;
+  }
+
+  h1.doc-title {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #333;
+    text-decoration: underline;
+  }
+  p.subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 24px;
+  }
+
+  .screens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .screen {
+    background: #fff;
+    border: 2.5px solid #2a2a2a;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 #2a2a2a;
+  }
+
+  .screen-label {
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .screen-inner {
+    padding: 16px;
+    min-height: 380px;
+  }
+
+  /* Wireframe components */
+  .wf-bar {
+    background: #2a2a2a;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wf-hero {
+    border: 2px dashed #aaa;
+    background: #f7f7f7;
+    text-align: center;
+    padding: 18px 12px;
+    margin-bottom: 14px;
+    border-radius: 2px;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .wf-hero .big-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: #2a2a2a;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .wf-btn {
+    display: block;
+    border: 2.5px solid #2a2a2a;
+    background: #fff;
+    text-align: center;
+    padding: 9px;
+    margin-bottom: 10px;
+    font-family: 'Balsamiq Sans', cursive;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .wf-btn.filled {
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .wf-btn.secondary {
+    border-style: dashed;
+    color: #666;
+  }
+
+  .wf-label {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .wf-input {
+    width: 100%;
+    border: 2px solid #2a2a2a;
+    padding: 7px 10px;
+    font-family: 'Balsamiq Sans', cursive;
+    font-size: 13px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    background: #fff;
+  }
+
+  .wf-select {
+    width: 100%;
+    border: 2px solid #2a2a2a;
+    padding: 7px 10px;
+    font-family: 'Balsamiq Sans', cursive;
+    font-size: 13px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    background: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232a2a2a'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+  }
+
+  .wf-rol-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .wf-rol-card {
+    border: 2px solid #2a2a2a;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .wf-rol-card.selected {
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .wf-rol-card .icon-ph {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .wf-card-tool {
+    border: 2px solid #2a2a2a;
+    border-radius: 2px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .wf-card-tool .tool-img {
+    width: 36px;
+    height: 36px;
+    border: 2px solid #aaa;
+    background: #eee;
+    flex-shrink: 0;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #888;
+  }
+
+  .wf-card-tool .tool-info h4 { font-size: 13px; margin-bottom: 2px; }
+  .wf-card-tool .tool-info p  { font-size: 11px; color: #666; line-height: 1.4; }
+
+  .wf-tag {
+    display: inline-block;
+    border: 1.5px solid #2a2a2a;
+    padding: 2px 8px;
+    font-size: 11px;
+    border-radius: 10px;
+    margin-right: 4px;
+    margin-top: 4px;
+  }
+
+  .wf-divider {
+    border: none;
+    border-top: 1.5px dashed #ccc;
+    margin: 12px 0;
+  }
+
+  .wf-nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .wf-nav-item {
+    border: 1.5px solid #2a2a2a;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .wf-nav-item.active {
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .wf-stars {
+    color: #2a2a2a;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .wf-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+
+  .wf-progress-step {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #2a2a2a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .wf-progress-step.done { background: #2a2a2a; color: #fff; }
+  .wf-progress-step.current { border-width: 3px; font-weight: 700; }
+
+  .wf-progress-line {
+    flex: 1;
+    height: 2px;
+    background: #2a2a2a;
+  }
+
+  .wf-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .wf-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #2a2a2a;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border-radius: 2px;
+  }
+
+  .wf-checkbox.checked { background: #2a2a2a; color: #fff; }
+
+  .placeholder-img {
+    width: 100%;
+    height: 80px;
+    background: repeating-linear-gradient(
+      45deg,
+      #e0e0e0,
+      #e0e0e0 4px,
+      #f0f0f0 4px,
+      #f0f0f0 8px
+    );
+    border: 2px solid #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+
+  .screen-number {
+    font-size: 11px;
+    color: #888;
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .flow-arrow {
+    text-align: center;
+    font-size: 22px;
+    color: #2a2a2a;
+    grid-column: 1 / -1;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="doc-title">Prototipo de Baja Resolución — Wireframes</h1>
+<p class="subtitle">Aplicativo Orientador para el Uso de Herramientas de Inteligencia Artificial · Subgrupo 11</p>
+
+<div class="screens-grid">
+
+  <!-- PANTALLA 1: BIENVENIDA -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 1 · Bienvenida / Inicio</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9776; OrientaIA</span>
+        <span>Iniciar sesión</span>
+      </div>
+      <div class="placeholder-img">[ Logo / Imagen ilustrativa ]</div>
+      <div class="wf-hero">
+        <span class="big-text">¿No sabes qué herramienta de IA usar?</span>
+        Encuentra la que mejor se adapta a tu rol y tarea en segundos.
+      </div>
+      <button class="wf-btn filled">Comenzar ahora</button>
+      <button class="wf-btn">Ver catálogo de herramientas</button>
+      <hr class="wf-divider">
+      <p style="font-size:11px;color:#888;text-align:center;">¿Ya tienes cuenta? <u>Inicia sesión</u></p>
+      <p class="screen-number">1 / 6</p>
+    </div>
+  </div>
+
+  <!-- PANTALLA 2: SELECCIÓN DE ROL -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 2 · Selección de rol</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9664; Volver</span>
+        <span>OrientaIA</span>
+        <span style="width:60px"></span>
+      </div>
+      <div class="wf-progress">
+        <div class="wf-progress-step done">1</div>
+        <div class="wf-progress-line"></div>
+        <div class="wf-progress-step current">2</div>
+        <div class="wf-progress-line" style="background:#ccc"></div>
+        <div class="wf-progress-step">3</div>
+        <div class="wf-progress-line" style="background:#ccc"></div>
+        <div class="wf-progress-step">4</div>
+      </div>
+      <p style="font-size:14px;font-weight:700;margin-bottom:6px;">¿Cuál es tu rol principal?</p>
+      <p style="font-size:12px;color:#666;margin-bottom:12px;">Selecciona la opción que mejor te describe</p>
+      <div class="wf-rol-grid">
+        <div class="wf-rol-card selected">
+          <span class="icon-ph">&#127891;</span>
+          Estudiante
+        </div>
+        <div class="wf-rol-card">
+          <span class="icon-ph">&#128188;</span>
+          Profesional
+        </div>
+        <div class="wf-rol-card">
+          <span class="icon-ph">&#127970;</span>
+          Empresa / Equipo
+        </div>
+        <div class="wf-rol-card">
+          <span class="icon-ph">&#128200;</span>
+          Emprendedor
+        </div>
+      </div>
+      <hr class="wf-divider">
+      <div class="wf-label">¿Área de trabajo / estudio?</div>
+      <select class="wf-select">
+        <option>Seleccionar área...</option>
+        <option>Tecnología / Sistemas</option>
+        <option>Salud</option>
+        <option>Educación</option>
+        <option>Negocios / Administración</option>
+        <option>Diseño y Creatividad</option>
+        <option>Derecho</option>
+        <option>Otra</option>
+      </select>
+      <button class="wf-btn filled">Continuar →</button>
+      <p class="screen-number">2 / 6</p>
+    </div>
+  </div>
+
+  <!-- PANTALLA 3: DESCRIPCIÓN DE TAREA -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 3 · Descripción de tarea</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9664; Volver</span>
+        <span>OrientaIA</span>
+        <span style="width:60px"></span>
+      </div>
+      <div class="wf-progress">
+        <div class="wf-progress-step done">1</div>
+        <div class="wf-progress-line"></div>
+        <div class="wf-progress-step done">2</div>
+        <div class="wf-progress-line"></div>
+        <div class="wf-progress-step current">3</div>
+        <div class="wf-progress-line" style="background:#ccc"></div>
+        <div class="wf-progress-step">4</div>
+      </div>
+      <p style="font-size:14px;font-weight:700;margin-bottom:6px;">¿Qué necesitas hacer?</p>
+      <p style="font-size:12px;color:#666;margin-bottom:10px;">Describe tu tarea o selecciona de las categorías</p>
+      <div class="wf-label">Describe brevemente tu tarea (opcional)</div>
+      <input class="wf-input" type="text" placeholder="Ej: redactar un informe, analizar datos...">
+      <div class="wf-label">O selecciona una categoría:</div>
+      <div style="margin-bottom:10px">
+        <span class="wf-tag" style="background:#2a2a2a;color:#fff">Redacción / Escritura</span>
+        <span class="wf-tag">Análisis de datos</span>
+        <span class="wf-tag">Programación</span>
+        <span class="wf-tag">Diseño / Imágenes</span>
+        <span class="wf-tag">Presentaciones</span>
+        <span class="wf-tag">Investigación</span>
+        <span class="wf-tag">Automatización</span>
+        <span class="wf-tag">Traducción</span>
+        <span class="wf-tag">Audio / Video</span>
+        <span class="wf-tag">Otro</span>
+      </div>
+      <hr class="wf-divider">
+      <div class="wf-label">¿Costo máximo aceptable?</div>
+      <select class="wf-select">
+        <option>Solo herramientas gratuitas</option>
+        <option>Hasta $10/mes</option>
+        <option>Hasta $30/mes</option>
+        <option>Sin límite</option>
+      </select>
+      <button class="wf-btn filled">Ver recomendaciones →</button>
+      <p class="screen-number">3 / 6</p>
+    </div>
+  </div>
+
+  <!-- PANTALLA 4: RESULTADOS / RECOMENDACIONES -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 4 · Resultados de recomendación</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9664; Modificar</span>
+        <span>OrientaIA</span>
+        <span>&#128722;</span>
+      </div>
+      <p style="font-size:13px;color:#555;margin-bottom:2px;">Rol: <strong>Estudiante · Tecnología</strong></p>
+      <p style="font-size:13px;color:#555;margin-bottom:10px;">Tarea: <strong>Redacción / Escritura</strong></p>
+      <div class="wf-nav">
+        <div class="wf-nav-item active">Todas (5)</div>
+        <div class="wf-nav-item">Gratuitas (3)</div>
+        <div class="wf-nav-item">Pago (2)</div>
+      </div>
+      <div class="wf-card-tool">
+        <div class="tool-img">Logo</div>
+        <div class="tool-info">
+          <h4>ChatGPT</h4>
+          <p>Redacción, resúmenes, corrección de estilo. Versión gratuita disponible.</p>
+          <div><span class="wf-tag">Gratuita</span><span class="wf-tag">Escritura</span></div>
+        </div>
+      </div>
+      <div class="wf-card-tool">
+        <div class="tool-img">Logo</div>
+        <div class="tool-info">
+          <h4>Notion AI</h4>
+          <p>Documentación, notas y redacción asistida integrada al flujo de trabajo.</p>
+          <div><span class="wf-tag">Freemium</span><span class="wf-tag">Organización</span></div>
+        </div>
+      </div>
+      <div class="wf-card-tool">
+        <div class="tool-img">Logo</div>
+        <div class="tool-info">
+          <h4>Grammarly</h4>
+          <p>Corrección gramatical y de estilo en tiempo real en múltiples plataformas.</p>
+          <div><span class="wf-tag">Freemium</span><span class="wf-tag">Corrección</span></div>
+        </div>
+      </div>
+      <button class="wf-btn secondary">Cargar más resultados...</button>
+      <p class="screen-number">4 / 6</p>
+    </div>
+  </div>
+
+  <!-- PANTALLA 5: DETALLE DE HERRAMIENTA -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 5 · Detalle de herramienta</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9664; Resultados</span>
+        <span>OrientaIA</span>
+        <span>&#128279;</span>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;">
+        <div class="tool-img" style="width:50px;height:50px;border:2px solid #aaa;background:#eee;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;border-radius:2px;flex-shrink:0;">Logo</div>
+        <div>
+          <p style="font-size:16px;font-weight:700;">ChatGPT</p>
+          <p style="font-size:12px;color:#666;">OpenAI · Asistente conversacional IA</p>
+          <div class="wf-stars">★★★★☆</div>
+        </div>
+      </div>
+      <div class="placeholder-img">[ Captura de pantalla de la herramienta ]</div>
+      <div class="wf-label">¿Por qué la recomendamos para ti?</div>
+      <p style="font-size:12px;color:#555;margin-bottom:10px;line-height:1.5;">Ideal para estudiantes de tecnología que necesitan apoyo en redacción de documentos, generación de código y resolución de preguntas técnicas.</p>
+      <div class="wf-label">Características principales:</div>
+      <div class="wf-checkbox-row"><div class="wf-checkbox checked">✓</div>Disponible en versión gratuita</div>
+      <div class="wf-checkbox-row"><div class="wf-checkbox checked">✓</div>Soporte en español</div>
+      <div class="wf-checkbox-row"><div class="wf-checkbox checked">✓</div>Integración con navegador</div>
+      <div class="wf-checkbox-row"><div class="wf-checkbox"></div>Requiere suscripción para funciones avanzadas</div>
+      <hr class="wf-divider">
+      <button class="wf-btn filled">Ir a la herramienta &#8599;</button>
+      <button class="wf-btn">Guardar en favoritos</button>
+      <p class="screen-number">5 / 6</p>
+    </div>
+  </div>
+
+  <!-- PANTALLA 6: HISTORIAL / PERFIL -->
+  <div class="screen">
+    <div class="screen-label">PANTALLA 6 · Historial y perfil de usuario</div>
+    <div class="screen-inner">
+      <div class="wf-bar">
+        <span>&#9776; Menú</span>
+        <span>Mi perfil</span>
+        <span>&#9881;</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;">
+        <div style="width:44px;height:44px;border:2px solid #2a2a2a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;">JS</div>
+        <div>
+          <p style="font-size:14px;font-weight:700;">Juan Suárez</p>
+          <p style="font-size:11px;color:#666;">Estudiante · Tecnología / Sistemas</p>
+        </div>
+      </div>
+      <hr class="wf-divider">
+      <div class="wf-label">Últimas búsquedas</div>
+      <div class="wf-card-tool" style="margin-bottom:6px;">
+        <div class="tool-img" style="width:28px;height:28px;font-size:9px;">Logo</div>
+        <div class="tool-info">
+          <h4 style="font-size:12px;">Redacción · hace 2 días</h4>
+          <p>ChatGPT, Notion AI, Grammarly</p>
+        </div>
+      </div>
+      <div class="wf-card-tool" style="margin-bottom:6px;">
+        <div class="tool-img" style="width:28px;height:28px;font-size:9px;">Logo</div>
+        <div class="tool-info">
+          <h4 style="font-size:12px;">Programación · hace 5 días</h4>
+          <p>GitHub Copilot, Tabnine, Codeium</p>
+        </div>
+      </div>
+      <hr class="wf-divider">
+      <div class="wf-label">Herramientas guardadas (3)</div>
+      <div>
+        <span class="wf-tag">ChatGPT</span>
+        <span class="wf-tag">Canva AI</span>
+        <span class="wf-tag">Notion AI</span>
+      </div>
+      <hr class="wf-divider">
+      <div class="wf-label">Califica la última recomendación</div>
+      <p style="font-size:12px;color:#555;margin-bottom:6px;">¿Fue útil la sugerencia de herramientas?</p>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <button class="wf-btn filled" style="flex:1;padding:6px">👍 Sí, útil</button>
+        <button class="wf-btn" style="flex:1;padding:6px">👎 Mejorar</button>
+      </div>
+      <button class="wf-btn secondary">Nueva búsqueda</button>
+      <p class="screen-number">6 / 6</p>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;font-size:12px;color:#999;margin-top:28px;">
+  Prototipo de baja resolución · Técnica: Wireframe (Balsamiq style) · Subgrupo 11 · Emprendimiento de Base Tecnológica · Politécnico Grancolombiano
+</p>
+
+</body>
+</html>

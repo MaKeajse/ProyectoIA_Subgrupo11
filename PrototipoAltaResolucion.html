@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrientaIA — Prototipo Alta Resolución</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    --bg: #F4F1EC;
+    --surface: #FDFCF9;
+    --surface2: #EDE9E1;
+    --ink: #1A1814;
+    --ink2: #6B6660;
+    --ink3: #A09C97;
+    --accent: #2D5A3D;
+    --accent-light: #E3EEE7;
+    --accent2: #C4753A;
+    --accent2-light: #FAF0E8;
+    --border: rgba(26,24,20,0.10);
+    --border2: rgba(26,24,20,0.18);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo .dot { 
+    width: 8px; height: 8px; 
+    background: var(--accent2); 
+    border-radius: 50%; 
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    color: var(--ink2);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .nav-link:hover { background: var(--surface2); color: var(--ink); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.15s;
+  }
+
+  .nav-cta:hover { opacity: 0.88; }
+
+  /* SCREENS WRAPPER */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== SCREEN 1: HOME ===== */
+  #home {
+    padding: 0;
+  }
+
+  .hero {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 32px 56px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--ink2);
+    line-height: 1.65;
+    margin-bottom: 36px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 28px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 28px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border2);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .btn-outline:hover { background: var(--surface2); }
+
+  .stats-bar {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .stat-item {
+    background: var(--surface);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink3);
+    margin-top: 2px;
+  }
+
+  .role-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 48px 32px;
+  }
+
+  .role-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .role-section > p {
+    text-align: center;
+    font-size: 15px;
+    color: var(--ink2);
+    margin-bottom: 32px;
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .role-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  }
+
+  .role-card:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+    transform: translateY(-2px);
+  }
+
+  .role-card.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .role-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 12px;
+  }
+
+  .role-card.selected .role-icon { background: var(--accent); }
+
+  .role-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .role-desc {
+    font-size: 12px;
+    color: var(--ink2);
+    line-height: 1.4;
+  }
+
+  /* ===== SCREEN 2: WIZARD ===== */
+  .wizard-layout {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  .wizard-progress {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+
+  .wp-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .wp-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--surface);
+    color: var(--ink2);
+    transition: all 0.2s;
+    position: relative;
+    z-index: 2;
+  }
+
+  .wp-circle.done {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .wp-circle.current {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-light);
+  }
+
+  .wp-label { font-size: 11px; color: var(--ink3); text-align: center; }
+  .wp-label.active { color: var(--accent); font-weight: 500; }
+
+  .wp-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border2);
+    margin: 0 -4px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .wp-line.done { background: var(--accent); }
+
+  .wizard-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+  }
+
+  .wizard-card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .wizard-card > p {
+    font-size: 14px;
+    color: var(--ink2);
+    margin-bottom: 28px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .field-desc {
+    font-size: 12px;
+    color: var(--ink3);
+    margin-bottom: 12px;
+  }
+
+  .roles-mini {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .role-mini {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s;
+    background: var(--bg);
+  }
+
+  .role-mini:hover { border-color: var(--accent); background: var(--surface); }
+
+  .role-mini.selected {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .role-mini .mini-icon {
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .role-mini.selected .mini-icon { background: var(--accent); }
+
+  .role-mini .mini-text { font-size: 13px; font-weight: 500; }
+  .role-mini .mini-sub { font-size: 11px; color: var(--ink2); margin-top: 1px; }
+
+  .select-custom {
+    width: 100%;
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    margin-bottom: 24px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6660'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .select-custom:focus { outline: none; border-color: var(--accent); }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .tag-filter {
+    border: 1.5px solid var(--border2);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--bg);
+    color: var(--ink2);
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .tag-filter:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  .tag-filter.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .wizard-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-back {
+    color: var(--ink2);
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ===== SCREEN 3: RESULTADOS ===== */
+  .results-layout {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 28px;
+  }
+
+  .sidebar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+  }
+
+  .sidebar h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+
+  .filter-group { margin-bottom: 20px; }
+
+  .filter-group-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .filter-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .filter-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 10px;
+  }
+
+  .filter-check.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .results-main {}
+
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .results-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+  }
+
+  .results-header p { font-size: 13px; color: var(--ink2); margin-top: 2px; }
+
+  .results-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+
+  .rtab {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink2);
+    transition: all 0.15s;
+  }
+
+  .rtab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: border-color 0.15s, transform 0.1s;
+    cursor: pointer;
+  }
+
+  .tool-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .tool-card.featured {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tool-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink2);
+    flex-shrink: 0;
+  }
+
+  .tool-logo.gpt { background: #10a37f; color: #fff; }
+  .tool-logo.notion { background: #1a1814; color: #fff; }
+  .tool-logo.gram { background: #15c39a; color: #fff; }
+  .tool-logo.claude { background: #D4763B; color: #fff; }
+  .tool-logo.copilot { background: #0078d4; color: #fff; }
+
+  .tool-content h3 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+  .tool-content .tool-org { font-size: 12px; color: var(--ink3); margin-bottom: 8px; }
+  .tool-content .tool-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; margin-bottom: 10px; }
+
+  .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--surface2);
+    color: var(--ink2);
+  }
+
+  .tag-pill.green { background: var(--accent-light); color: var(--accent); }
+  .tag-pill.orange { background: var(--accent2-light); color: var(--accent2); }
+
+  .tool-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .match-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .fav-btn {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--border2);
+    border-radius: 8px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.15s;
+  }
+
+  .fav-btn:hover { border-color: var(--accent2); background: var(--accent2-light); }
+  .fav-btn.active { background: var(--accent2-light); border-color: var(--accent2); }
+
+  .tool-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  .stars { color: #E8A838; letter-spacing: 1px; font-size: 12px; }
+
+  /* ===== SCREEN 4: DETALLE ===== */
+  .detail-layout {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  .detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink2);
+    margin-bottom: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.15s;
+  }
+
+  .detail-back:hover { color: var(--ink); }
+
+  .detail-header {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+
+  .detail-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .detail-logo.gpt { background: #10a37f; color: #fff; }
+
+  .detail-info h1 { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 4px; }
+  .detail-info .org { font-size: 14px; color: var(--ink2); margin-bottom: 10px; }
+
+  .detail-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .detail-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .detail-section h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+
+  .why-box {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .feature-row:last-child { border-bottom: none; }
+
+  .feat-icon {
+    font-size: 15px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .feat-label { font-weight: 500; }
+  .feat-desc { font-size: 12px; color: var(--ink2); margin-top: 1px; }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="dot"></span>
+    OrientaIA
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="goTo('home')">Inicio</button>
+    <button class="nav-link" onclick="goTo('wizard')">Buscar herramienta</button>
+    <button class="nav-link">Catálogo</button>
+    <button class="nav-link">Mi perfil</button>
+    <button class="nav-cta" onclick="goTo('wizard')">Comenzar →</button>
+  </div>
+</nav>
+
+<!-- ===== PANTALLA 1: HOME ===== -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">
+      ✦ Orientación personalizada con IA
+    </div>
+    <h1>Encuentra la herramienta de IA <em>perfecta</em> para ti</h1>
+    <p>Describe tu rol y tu tarea. En segundos te recomendamos las herramientas de inteligencia artificial más adecuadas, con guía de uso paso a paso.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="goTo('wizard')">Comenzar orientación →</button>
+      <button class="btn-outline">Ver el catálogo completo</button>
+    </div>
+  </div>
+
+  <div class="stats-bar" style="padding: 0 32px; max-width: 680px; margin: 0 auto 48px;">
+    <div class="stat-item">
+      <span class="stat-num">120+</span>
+      <span class="stat-label">Herramientas catalogadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">18</span>
+      <span class="stat-label">Categorías de tareas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Perfiles de usuario</span>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <h2>¿Cuál es tu perfil?</h2>
+    <p>Selecciona tu rol y comenzamos la orientación personalizada</p>
+    <div class="roles-grid">
+      <div class="role-card" onclick="selectRoleAndGo('estudiante')">
+        <div class="role-icon">🎓</div>
+        <div class="role-name">Estudiante</div>
+        <div class="role-desc">Tareas académicas, investigación, redacción de trabajos</div>
+      </div>
+      <div class="role-card" onclick="selectRoleAndGo('profesional')">
+        <div class="role-icon">💼</div>
+        <div class="role-name">Profesional</div>
+        <div class="role-desc">Productividad laboral, análisis de datos, informes</div>
+      </div>
+      <div class="role-card" onclick="selectRoleAndGo('empresa')">
+        <div class="role-icon">🏢</div>
+        <div class="role-name">Empresa / Equipo</div>
+        <div class="role-desc">Automatización, flujos de trabajo, colaboración</div>
+      </div>
+      <div class="role-card" onclick="selectRoleAndGo('emprendedor')">
+        <div class="role-icon">🚀</div>
+        <div class="role-name">Emprendedor</div>
+        <div class="role-desc">Marketing, pitch, desarrollo de producto</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PANTALLA 2: WIZARD ===== -->
+<div id="wizard" class="page">
+  <div class="wizard-layout">
+
+    <div class="wizard-progress">
+      <div class="wp-step">
+        <div class="wp-circle done" id="wc1">✓</div>
+        <div class="wp-label active">Rol</div>
+      </div>
+      <div class="wp-line" id="wl1"></div>
+      <div class="wp-step">
+        <div class="wp-circle current" id="wc2">2</div>
+        <div class="wp-label active">Tarea</div>
+      </div>
+      <div class="wp-line" id="wl2" style="background:var(--border2)"></div>
+      <div class="wp-step">
+        <div class="wp-circle" id="wc3">3</div>
+        <div class="wp-label">Preferencias</div>
+      </div>
+      <div class="wp-line" style="background:var(--border2)"></div>
+      <div class="wp-step">
+        <div class="wp-circle" id="wc4">4</div>
+        <div class="wp-label">Resultados</div>
+      </div>
+    </div>
+
+    <div class="wizard-card" id="wizard-step-1">
+      <h2>¿Cuál es tu rol?</h2>
+      <p>Selecciona el perfil que mejor te describe para personalizar las recomendaciones</p>
+
+      <div class="roles-mini">
+        <div class="role-mini selected" id="rm-estudiante" onclick="selectRole('estudiante')">
+          <div class="mini-icon">🎓</div>
+          <div>
+            <div class="mini-text">Estudiante</div>
+            <div class="mini-sub">Académico</div>
+          </div>
+        </div>
+        <div class="role-mini" id="rm-profesional" onclick="selectRole('profesional')">
+          <div class="mini-icon">💼</div>
+          <div>
+            <div class="mini-text">Profesional</div>
+            <div class="mini-sub">Laboral</div>
+          </div>
+        </div>
+        <div class="role-mini" id="rm-empresa" onclick="selectRole('empresa')">
+          <div class="mini-icon">🏢</div>
+          <div>
+            <div class="mini-text">Empresa / Equipo</div>
+            <div class="mini-sub">Organizacional</div>
+          </div>
+        </div>
+        <div class="role-mini" id="rm-emprendedor" onclick="selectRole('emprendedor')">
+          <div class="mini-icon">🚀</div>
+          <div>
+            <div class="mini-text">Emprendedor</div>
+            <div class="mini-sub">Startup / Negocio</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-label">Área de trabajo o estudio</div>
+      <select class="select-custom" id="area-select">
+        <option value="">Seleccionar área...</option>
+        <option value="tech">Tecnología / Sistemas</option>
+        <option value="health">Salud</option>
+        <option value="edu">Educación</option>
+        <option value="biz">Negocios / Administración</option>
+        <option value="design">Diseño y Creatividad</option>
+        <option value="law">Derecho</option>
+        <option value="science">Ciencias Exactas</option>
+        <option value="other">Otra</option>
+      </select>
+
+      <div class="wizard-footer">
+        <button class="btn-back" onclick="goTo('home')">← Volver</button>
+        <button class="btn-primary" onclick="nextStep()">Continuar →</button>
+      </div>
+    </div>
+
+    <div class="wizard-card" id="wizard-step-2" style="display:none">
+      <h2>¿Qué necesitas hacer?</h2>
+      <p>Selecciona la categoría de tarea principal o describe lo que necesitas</p>
+
+      <div class="field-label">Categoría de tarea</div>
+      <div class="field-desc">Toca una o varias categorías que apliquen</div>
+      <div class="tags-container" id="task-tags">
+        <button class="tag-filter selected" onclick="toggleTag(this)">✍️ Redacción / Escritura</button>
+        <button class="tag-filter" onclick="toggleTag(this)">📊 Análisis de datos</button>
+        <button class="tag-filter" onclick="toggleTag(this)">💻 Programación / Código</button>
+        <button class="tag-filter" onclick="toggleTag(this)">🎨 Diseño / Imágenes</button>
+        <button class="tag-filter" onclick="toggleTag(this)">📑 Presentaciones</button>
+        <button class="tag-filter" onclick="toggleTag(this)">🔍 Investigación</button>
+        <button class="tag-filter" onclick="toggleTag(this)">⚡ Automatización</button>
+        <button class="tag-filter" onclick="toggleTag(this)">🌐 Traducción / Idiomas</button>
+        <button class="tag-filter" onclick="toggleTag(this)">🎵 Audio / Video</button>
+        <button class="tag-filter" onclick="toggleTag(this)">📧 Comunicación / Email</button>
+      </div>
+
+      <div class="field-label">Costo máximo aceptable</div>
+      <select class="select-custom" id="cost-select">
+        <option value="free">Solo herramientas gratuitas</option>
+        <option value="10">Hasta $10 / mes</option>
+        <option value="30">Hasta $30 / mes</option>
+        <option value="any">Sin límite de costo</option>
+      </select>
+
+      <div class="wizard-footer">
+        <button class="btn-back" onclick="prevStep()">← Volver</button>
+        <button class="btn-primary" onclick="goTo('results')">Ver recomendaciones →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PANTALLA 3: RESULTADOS ===== -->
+<div id="results" class="page">
+  <div class="results-layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3>Filtrar resultados</h3>
+
+      <div class="filter-group">
+        <div class="filter-group-label">Costo</div>
+        <div class="filter-opt">
+          <div class="filter-check on">✓</div>
+          <span>Gratuita</span>
+        </div>
+        <div class="filter-opt">
+          <div class="filter-check on">✓</div>
+          <span>Freemium</span>
+        </div>
+        <div class="filter-opt">
+          <div class="filter-check"></div>
+          <span>De pago</span>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-label">Idioma</div>
+        <div class="filter-opt">
+          <div class="filter-check on">✓</div>
+          <span>Español</span>
+        </div>
+        <div class="filter-opt">
+          <div class="filter-check on">✓</div>
+          <span>Inglés</span>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-group-label">Tipo de uso</div>
+        <div class="filter-opt">
+          <div class="filter-check on">✓</div>
+          <span>Web</span>
+        </div>
+        <div class="filter-opt">
+          <div class="filter-check"></div>
+          <span>Aplicación móvil</span>
+        </div>
+        <div class="filter-opt">
+          <div class="filter-check"></div>
+          <span>API / Desarrollador</span>
+        </div>
+      </div>
+
+      <button class="btn-outline" style="width:100%;font-size:13px;padding:9px;" onclick="goTo('wizard')">Modificar búsqueda</button>
+    </div>
+
+    <!-- Main content -->
+    <div class="results-main">
+      <div class="results-header">
+        <div>
+          <h2>Recomendaciones para ti</h2>
+          <p>Rol: <strong>Estudiante · Tecnología</strong> · Tarea: <strong>Redacción / Escritura</strong></p>
+        </div>
+      </div>
+
+      <div class="results-tabs">
+        <button class="rtab active">Todas (5)</button>
+        <button class="rtab">Gratuitas (3)</button>
+        <button class="rtab">Freemium (2)</button>
+      </div>
+
+      <!-- TOOL CARDS -->
+      <div class="tool-card featured" onclick="goTo('detail')">
+        <div class="tool-logo gpt">G</div>
+        <div class="tool-content">
+          <h3>ChatGPT</h3>
+          <div class="tool-org">OpenAI · Asistente conversacional</div>
+          <div class="tool-desc">Potente asistente de escritura, análisis y resolución de preguntas. Versión gratuita robusta para uso académico diario.</div>
+          <div class="tool-tags">
+            <span class="tag-pill green">Gratuita</span>
+            <span class="tag-pill">Escritura</span>
+            <span class="tag-pill">Análisis</span>
+            <span class="tag-pill">Español</span>
+          </div>
+        </div>
+        <div class="tool-actions">
+          <div class="match-badge">98% compatibilidad</div>
+          <div class="tool-rating">
+            <span class="stars">★★★★★</span> 4.8
+          </div>
+          <button class="fav-btn active" onclick="event.stopPropagation()">♥</button>
+        </div>
+      </div>
+
+      <div class="tool-card" onclick="goTo('detail')">
+        <div class="tool-logo notion">N</div>
+        <div class="tool-content">
+          <h3>Notion AI</h3>
+          <div class="tool-org">Notion Labs · Gestión del conocimiento</div>
+          <div class="tool-desc">Redacción asistida integrada en tu espacio de trabajo. Ideal para tomar apuntes, organizar proyectos y generar documentos estructurados.</div>
+          <div class="tool-tags">
+            <span class="tag-pill orange">Freemium</span>
+            <span class="tag-pill">Notas</span>
+            <span class="tag-pill">Organización</span>
+            <span class="tag-pill">Español</span>
+          </div>
+        </div>
+        <div class="tool-actions">
+          <div class="match-badge" style="background:var(--ink2)">91% compatibilidad</div>
+          <div class="tool-rating">
+            <span class="stars">★★★★☆</span> 4.5
+          </div>
+          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
+        </div>
+      </div>
+
+      <div class="tool-card" onclick="goTo('detail')">
+        <div class="tool-logo gram">Gr</div>
+        <div class="tool-content">
+          <h3>Grammarly</h3>
+          <div class="tool-org">Grammarly Inc. · Corrección y estilo</div>
+          <div class="tool-desc">Corrección gramatical y de estilo en tiempo real. Extensión para navegador y app de escritorio. Muy útil para trabajos académicos en inglés.</div>
+          <div class="tool-tags">
+            <span class="tag-pill orange">Freemium</span>
+            <span class="tag-pill">Corrección</span>
+            <span class="tag-pill">Inglés</span>
+          </div>
+        </div>
+        <div class="tool-actions">
+          <div class="match-badge" style="background:var(--ink2)">85% compatibilidad</div>
+          <div class="tool-rating">
+            <span class="stars">★★★★☆</span> 4.3
+          </div>
+          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
+        </div>
+      </div>
+
+      <div class="tool-card" onclick="goTo('detail')">
+        <div class="tool-logo claude">C</div>
+        <div class="tool-content">
+          <h3>Claude</h3>
+          <div class="tool-org">Anthropic · Asistente IA avanzado</div>
+          <div class="tool-desc">Excelente para redacción de documentos largos, análisis crítico y explicaciones detalladas. Alta capacidad de razonamiento para tareas complejas.</div>
+          <div class="tool-tags">
+            <span class="tag-pill green">Gratuita</span>
+            <span class="tag-pill">Documentos</span>
+            <span class="tag-pill">Análisis</span>
+            <span class="tag-pill">Español</span>
+          </div>
+        </div>
+        <div class="tool-actions">
+          <div class="match-badge" style="background:var(--ink2)">88% compatibilidad</div>
+          <div class="tool-rating">
+            <span class="stars">★★★★★</span> 4.7
+          </div>
+          <button class="fav-btn" onclick="event.stopPropagation()">♡</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== PANTALLA 4: DETALLE ===== -->
+<div id="detail" class="page">
+  <div class="detail-layout">
+
+    <button class="detail-back" onclick="goTo('results')">← Volver a resultados</button>
+
+    <div class="detail-header">
+      <div class="detail-logo gpt">G</div>
+      <div class="detail-info">
+        <h1>ChatGPT</h1>
+        <div class="org">OpenAI · Asistente conversacional de inteligencia artificial</div>
+        <div class="detail-badges">
+          <span class="tag-pill green">Gratuita</span>
+          <span class="tag-pill orange">También versión Plus: $20/mes</span>
+          <span class="tag-pill">Web</span>
+          <span class="tag-pill">Móvil</span>
+          <span class="tag-pill">Español</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>¿Por qué la recomendamos para ti?</h2>
+      <div class="why-box">
+        Como estudiante de Tecnología/Sistemas que necesita apoyo en redacción y escritura, ChatGPT es la herramienta más versátil y con menor curva de aprendizaje. Te permite generar borradores, corregir textos, explicar conceptos técnicos y obtener ejemplos de código, todo desde una sola interfaz conversacional.
+      </div>
+      <div style="display:flex;gap:16px;">
+        <div style="text-align:center;flex:1;padding:14px;background:var(--accent-light);border-radius:var(--radius-sm);">
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--accent)">98%</div>
+          <div style="font-size:12px;color:var(--ink2)">Compatibilidad</div>
+        </div>
+        <div style="text-align:center;flex:1;padding:14px;background:var(--surface2);border-radius:var(--radius-sm);">
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)">★ 4.8</div>
+          <div style="font-size:12px;color:var(--ink2)">Valoración usuarios</div>
+        </div>
+        <div style="text-align:center;flex:1;padding:14px;background:var(--surface2);border-radius:var(--radius-sm);">
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)">Gratis</div>
+          <div style="font-size:12px;color:var(--ink2)">Costo base</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>Características principales</h2>
+      <div class="feature-row">
+        <div class="feat-icon">✅</div>
+        <div>
+          <div class="feat-label">Disponible en versión gratuita</div>
+          <div class="feat-desc">Acceso completo al modelo GPT-4o mini sin necesidad de pago</div>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feat-icon">✅</div>
+        <div>
+          <div class="feat-label">Soporte nativo en español</div>
+          <div class="feat-desc">Comprende y responde en español con alta precisión</div>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feat-icon">✅</div>
+        <div>
+          <div class="feat-label">Carga y análisis de documentos</div>
+          <div class="feat-desc">Puede leer PDFs, Word y otros archivos para analizarlos</div>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feat-icon">✅</div>
+        <div>
+          <div class="feat-label">Generación y depuración de código</div>
+          <div class="feat-desc">Útil para tareas de programación y proyectos técnicos</div>
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feat-icon">⚠️</div>
+        <div>
+          <div class="feat-label">Funciones avanzadas requieren suscripción Plus</div>
+          <div class="feat-desc">GPT-4o completo, memoria avanzada y plugins: $20/mes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>Cómo empezar a usarlo</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:8px;">1️⃣</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Crear cuenta</div>
+          <div style="font-size:12px;color:var(--ink2)">Regístrate gratis en chatgpt.com</div>
+        </div>
+        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:8px;">2️⃣</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Describir la tarea</div>
+          <div style="font-size:12px;color:var(--ink2)">Escribe qué necesitas en el chat</div>
+        </div>
+        <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:8px;">3️⃣</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:4px;">Iterar y mejorar</div>
+          <div style="font-size:12px;color:var(--ink2)">Pide ajustes hasta obtener el resultado</div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="btn-primary">Ir a ChatGPT ↗</button>
+        <button class="btn-outline" onclick="goTo('results')">Ver otras opciones</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let currentRole = 'estudiante';
+  let wizardStep = 1;
+
+  function goTo(screen) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(screen).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function selectRoleAndGo(role) {
+    currentRole = role;
+    goTo('wizard');
+    selectRole(role);
+  }
+
+  function selectRole(role) {
+    currentRole = role;
+    document.querySelectorAll('.role-mini').forEach(r => r.classList.remove('selected'));
+    const el = document.getElementById('rm-' + role);
+    if (el) el.classList.add('selected');
+  }
+
+  function nextStep() {
+    document.getElementById('wizard-step-1').style.display = 'none';
+    document.getElementById('wizard-step-2').style.display = 'block';
+    document.getElementById('wc2').textContent = '✓';
+    document.getElementById('wc2').classList.remove('current');
+    document.getElementById('wc2').classList.add('done');
+    document.getElementById('wl2').style.background = 'var(--accent)';
+    document.getElementById('wc3').classList.add('current');
+  }
+
+  function prevStep() {
+    document.getElementById('wizard-step-2').style.display = 'none';
+    document.getElementById('wizard-step-1').style.display = 'block';
+    document.getElementById('wc2').textContent = '2';
+    document.getElementById('wc2').classList.add('current');
+    document.getElementById('wc2').classList.remove('done');
+    document.getElementById('wl2').style.background = 'var(--border2)';
+    document.getElementById('wc3').classList.remove('current');
+  }
+
+  function toggleTag(el) {
+    el.classList.toggle('selected');
+  }
+</script>
+</body>
+</html>
